@@ -1,0 +1,21 @@
+version: "3.5"
+
+services:
+
+  mongo:
+    image: mongo:4.0.8
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.stats().ok' | mongo localhost:27017/jobsdb --quiet
+      start_period: 20s
+
+  # mongo-express:
+  #   image: mongo-express:0.49.0
+  #   container_name: mongo-express
+  #   ports:
+  #     - "8081:8081"
+  #   healthcheck:
+  #     test: [ "CMD", "nc", "-z", "localhost", "8081" ]
+  #     start_period: 20s

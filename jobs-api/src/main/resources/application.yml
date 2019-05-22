@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: jobs-api
+  data:
+    mongodb:
+      uri: mongodb://${MONGODB_HOST:localhost}:${MONGODB_PORT:27017}/jobsdb
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    binders:
+      enabled: true
+
+okta:
+  oauth2:
+    # issuer: https://${OKTA_DOMAIN}/oauth2/default
+    issuer: https://dev-279724.okta.com/oauth2/default
+    # clientId: ${OKTA_CLIENT_ID}
+    clientId: 0oaky2d71EXMSsscC356
+    rolesClaim: groups
