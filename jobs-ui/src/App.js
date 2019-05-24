@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Customer from './components/customer/Customer'
@@ -9,17 +10,23 @@ import JobForm from './components/staff/JobForm'
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Navbar />
-        <Route path='/' exact component={Home} />
-        <Route path='/customer' exact component={Customer} />
-        <Route path='/staff' exact component={Staff} />
-        <Route path='/jobs/:job_id' component={JobView} />
-        <Route path='/staff/jobs' exact component={JobForm} />
-        <Route path='/staff/jobs/:job_id' component={JobForm} />
-      </div>
-    </BrowserRouter>
+    <Router>
+      <Security
+        issuer={`${process.env.REACT_APP_OKTA_ORG_URL}/oauth2/default`}
+        client_id={process.env.REACT_APP_OKTA_CLIENT_ID}
+        redirect_uri={window.location.origin + '/implicit/callback'} >
+        <div className="App">
+          <Navbar />
+          <Route path='/' exact component={Home} />
+          <SecureRoute path='/customer' exact component={Customer} />
+          <SecureRoute path='/staff' exact component={Staff} />
+          <SecureRoute path='/jobs/:job_id' component={JobView} />
+          <SecureRoute path='/staff/jobs' exact component={JobForm} />
+          <SecureRoute path='/staff/jobs/:job_id' component={JobForm} />
+          <Route path='/implicit/callback' component={ImplicitCallback} />
+        </div>
+      </Security>
+    </Router>
   );
 }
 
