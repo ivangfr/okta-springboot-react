@@ -24,7 +24,7 @@ class Staff extends Component {
     axios.get('http://localhost:8080/api/jobs')
       .then(response => {
         this.setState({
-          jobs: response.data,
+          jobs: response.data.content,
           updatingJob: null
         })
       })

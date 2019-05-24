@@ -1,9 +1,9 @@
 package com.mycompany.jobsapi.rest.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
 
 @Data
 public class CreateJobDto {

@@ -1,11 +1,20 @@
 package com.mycompany.jobsapi.rest;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.rest.dto.CreateJobDto;
 import com.mycompany.jobsapi.rest.dto.JobDto;
 import com.mycompany.jobsapi.rest.dto.UpdateJobDto;
 import com.mycompany.jobsapi.service.JobService;
-import ma.glasnost.orika.MapperFacade;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +27,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-
-import javax.validation.Valid;
-
-import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
+import ma.glasnost.orika.MapperFacade;
 
 @Slf4j
 @RestController
@@ -39,11 +43,14 @@ public class JobController {
     }
 
     @GetMapping
-    public List<JobDto> getAllJobs() {
-        return jobService.getAllJobs()
-                .stream()
-                .map(job -> mapperFacade.map(job, JobDto.class))
-                .collect(Collectors.toList());
+    public Page<JobDto> getAllJobs(Pageable pageable) {
+        Page<Job> pageJobs = jobService.getAllJobsByPage(pageable);
+        return pageJobs.map(new Function<Job,JobDto>() {
+            @Override
+            public JobDto apply(Job job) {
+                return mapperFacade.map(job, JobDto.class);
+            }
+        });
     }
 
     @GetMapping("/last6")

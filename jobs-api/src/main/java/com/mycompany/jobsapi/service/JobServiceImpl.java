@@ -1,11 +1,14 @@
 package com.mycompany.jobsapi.service;
 
+import java.util.List;
+
 import com.mycompany.jobsapi.exception.JobNotFoundException;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.repository.JobRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -22,8 +25,8 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getAllJobs() {
-        return jobRepository.findAllByOrderByCreateDateDesc();
+    public Page<Job> getAllJobsByPage(Pageable pageable) {
+        return jobRepository.findAllByOrderByCreateDateDesc(pageable);
     }
 
     @Override
