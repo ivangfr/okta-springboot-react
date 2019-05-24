@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import JobList from './JobList'
-import Search from '../misc/Search'
 import { Link } from 'react-router-dom'
 import M from 'materialize-css';
+import axios from 'axios';
+import JobList from './JobList'
+import Search from '../misc/Search'
 
 class Staff extends Component {
   state = {
@@ -20,43 +21,42 @@ class Staff extends Component {
   }
 
   refresh = (e) => {
-    fetch("http://localhost:8080/api/jobs")
-      .then(res => res.json())
-      .then(jobs => {
+    axios.get('http://localhost:8080/api/jobs')
+      .then(response => {
         this.setState({
-          jobs,
+          jobs: response.data,
           updatingJob: null
         })
       })
+      .catch(error => console.log(error))
   }
 
   deleteJob = (id) => {
-    fetch('http://localhost:8080/api/jobs/' + id, {
-      method: "DELETE"
-    })
+    axios.delete('http://localhost:8080/api/jobs/' + id)
       .then(() => this.refresh())
+      .catch(error => console.log(error))
   }
 
   saveJob = (job) => {
     const id = job.id
 
-    let httpMethod = 'POST'
+    let method = 'POST'
     let url = 'http://localhost:8080/api/jobs'
     if (id) {
-      httpMethod = 'PUT'
+      method = 'PUT'
       url += '/' + id
     }
 
-    fetch(url, {
-      method: httpMethod,
-      body: JSON.stringify(job),
+    axios({
+      method: method,
+      url: url,
       headers: {
         'Content-Type': 'application/json'
       },
+      data: JSON.stringify(job)
+    }).then(() => {
+      this.refresh()
     })
-      .then(() => {
-        this.refresh()
-      })
   }
 
   updateJob = (job) => {

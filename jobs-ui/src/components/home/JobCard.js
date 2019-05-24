@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../misc/Logo'
-import Moment from 'react-moment';
+import TimesAgo from '../misc/TimesAgo'
 
 export default function JobCard({ job }) {
   return (
@@ -20,7 +20,7 @@ export default function JobCard({ job }) {
                 </div>
                 <div className="row">
                   <div className="col s12">
-                    <Moment className="right" fromNow>{job.createDate}</Moment>
+                    <TimesAgo className="right" createDate={job.createDate} />
                   </div>
                 </div>
               </div>

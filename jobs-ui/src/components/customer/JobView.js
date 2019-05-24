@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Moment from 'react-moment'
+import axios from 'axios'
 import Logo from '../misc/Logo'
+import TimesAgo from '../misc/TimesAgo'
 
 class JobView extends Component {
   state = {
@@ -9,13 +10,13 @@ class JobView extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.job_id;
-    fetch("http://localhost:8080/api/jobs/" + id)
-      .then(res => res.json())
-      .then(job => {
+    axios.get('http://localhost:8080/api/jobs/' + id)
+      .then(response => {
         this.setState({
-          job
+          job: response.data
         })
       })
+      .catch(error => console.log(error))
   }
 
   render() {
@@ -31,7 +32,7 @@ class JobView extends Component {
               <ul style={{ "margin": "0px" }}>
                 <li><span>{job.company}</span></li>
                 <li><span>{job.id}</span></li>
-                <li><Moment fromNow>{job.createDate}</Moment></li>
+                <li><TimesAgo createDate={job.createDate} /></li>
               </ul>
             </div>
           </div>

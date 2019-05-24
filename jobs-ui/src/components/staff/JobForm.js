@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import M from 'materialize-css';
+import axios from 'axios';
 import JobCardHome from '../home/JobCard'
 import JobCardCustomer from '../customer/JobCard'
 
@@ -27,18 +28,19 @@ class JobForm extends Component {
   componentDidMount() {
     const id = this.props.match.params.job_id;
     if (id) {
-      fetch("http://localhost:8080/api/jobs/" + id)
-        .then(res => res.json())
-        .then(job => {
-          this.setState({
-            id: job.id,
-            title: job.title,
-            company: job.company,
-            logoUrl: job.logoUrl,
-            description: job.description,
-            createDate: job.createDate
-          })
+      axios.get('http://localhost:8080/api/jobs/' + id)
+      .then(response => {
+        const job = response.data;
+        this.setState({
+          id: job.id,
+          title: job.title,
+          company: job.company,
+          logoUrl: job.logoUrl,
+          description: job.description,
+          createDate: job.createDate
         })
+      })
+      .catch(error => console.log(error))
     }
 
     M.Tabs.init(document.querySelectorAll('.tabs'));
@@ -51,23 +53,23 @@ class JobForm extends Component {
 
     const job = this.state
 
-    let httpMethod = 'POST'
+    let method = 'POST'
     let url = 'http://localhost:8080/api/jobs'
     if (job.id) {
-      httpMethod = 'PUT'
+      method = 'PUT'
       url += '/' + job.id
     }
 
-    fetch(url, {
-      method: httpMethod,
-      body: JSON.stringify(job),
+    axios({
+      method: method,
+      url: url,
       headers: {
         'Content-Type': 'application/json'
       },
+      data: JSON.stringify(job)
+    }).then(() => {
+      this.redirectJobsList();
     })
-      .then(() => {
-        this.redirectJobsList();
-      })
   }
 
   validateForm = () => {

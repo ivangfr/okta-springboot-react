@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import JobList from './JobList'
 import Search from '../misc/Search'
 
@@ -8,13 +9,13 @@ class Customer extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/jobs")
-      .then(res => res.json())
-      .then(jobs => {
+    axios.get('http://localhost:8080/api/jobs')
+      .then(response => {
         this.setState({
-          jobs
+          jobs: response.data
         })
       })
+      .catch(error => console.log(error))
   }
 
   render() {

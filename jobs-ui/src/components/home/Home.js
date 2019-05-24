@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import JobList from './JobList'
 
 class Home extends Component {
@@ -7,13 +8,13 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/jobs/last6")
-      .then(res => res.json())
-      .then(jobs => {
+    axios.get('http://localhost:8080/api/jobs/last6')
+      .then(response => {
         this.setState({
-          jobs
+          jobs: response.data
         })
       })
+      .catch(error => console.log(error))
   }
 
   render() {
