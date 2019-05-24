@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import Logo from '../Logo'
+import Logo from '../misc/Logo'
 
 class JobView extends Component {
   state = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Jobs from './Jobs'
-import Search from '../Search'
+import JobList from './JobList'
+import Search from '../misc/Search'
 
 class Customer extends Component {
   state = {
@@ -21,7 +21,7 @@ class Customer extends Component {
     return (
       <div className="container">
         <Search />
-        <Jobs jobs={this.state.jobs} />
+        <JobList jobs={this.state.jobs} />
       </div>
     )
   }

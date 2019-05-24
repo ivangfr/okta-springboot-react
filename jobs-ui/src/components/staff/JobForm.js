@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import M from 'materialize-css';
-import JobCardHome from '../JobCard'
+import JobCardHome from '../home/JobCard'
 import JobCardCustomer from '../customer/JobCard'
 
 class JobForm extends Component {

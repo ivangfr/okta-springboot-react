@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from './Logo'
+import Logo from '../misc/Logo'
 import Moment from 'react-moment';
 
 export default function JobCard({ job }) {

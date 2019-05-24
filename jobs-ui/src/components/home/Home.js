@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Jobs from './Jobs'
+import JobList from './JobList'
 
 class Home extends Component {
   state = {
@@ -20,7 +20,7 @@ class Home extends Component {
     return (
       <div className="container">
         <h5>Last 6 jobs added</h5>
-        <Jobs jobs={this.state.jobs} />
+        <JobList jobs={this.state.jobs} />
       </div>
     )
   }

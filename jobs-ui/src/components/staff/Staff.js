@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Jobs from './Jobs'
-import Search from '../Search'
+import JobList from './JobList'
+import Search from '../misc/Search'
 import { Link } from 'react-router-dom'
 import M from 'materialize-css';
 
@@ -70,7 +70,7 @@ class Staff extends Component {
       <div>
         <div className="container">
           <Search />
-          <Jobs
+          <JobList
             jobs={this.state.jobs}
             deleteJob={this.deleteJob}
             updateJob={this.updateJob}

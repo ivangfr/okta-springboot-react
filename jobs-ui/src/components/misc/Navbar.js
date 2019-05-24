@@ -33,16 +33,13 @@ class Navbar extends Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log(this.state)
     const logInOut = this.state.authenticated ? "Logout" : "Login"
-
     return (
       <div>
         <div className="navbar-fixed">
           <nav className="light-blue darken-4">
             <div className="nav-wrapper container">
-              <a href="/" className="brand-logo">Jobs Portal</a>
+              <Link to="/" className="brand-logo">Jobs Portal</Link>
               <a href="/" data-target="mobile-menu" className="sidenav-trigger">
                 <i className="material-icons">menu</i>
               </a>

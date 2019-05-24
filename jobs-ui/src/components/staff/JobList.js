@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../Logo'
+import Logo from '../misc/Logo'
 
 function Jobs({ jobs, deleteJob }) {
   const jobList = jobs.map(job => {
