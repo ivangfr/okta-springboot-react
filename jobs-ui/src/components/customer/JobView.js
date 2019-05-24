@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import Moment from 'react-moment'
+import Logo from '../Logo'
 
-class Job extends Component {
+class JobView extends Component {
   state = {
     job: null
   }
@@ -23,17 +25,18 @@ class Job extends Component {
         <div className="col s12">
           <div className="row">
             <div className="col s3">
-              <img src={job.logoUrl} alt="" className="responsive-img" />
+              <Logo logoUrl={job.logoUrl} />
             </div>
             <div className="col s3 offset-s6">
-              <ul className="blue-text text-darken-2" style={{ "margin": "0px" }}>
+              <ul style={{ "margin": "0px" }}>
+                <li><span>{job.company}</span></li>
                 <li><span>{job.id}</span></li>
-                <li><span>{job.createDate}</span></li>
+                <li><Moment fromNow>{job.createDate}</Moment></li>
               </ul>
             </div>
           </div>
           <div className="divider"></div>
-          <div className="row" style={{"marginTop": "30px", "marginBottom": "20px"}}>
+          <div className="row" style={{ "marginTop": "30px", "marginBottom": "20px" }}>
             <div className="col s12">
               <span className="flow-text">{job.title}</span>
               <span className="waves-effect waves-light btn-small blue right">Apply</span>
@@ -55,4 +58,4 @@ class Job extends Component {
   }
 }
 
-export default Job
+export default JobView

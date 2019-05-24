@@ -12,7 +12,7 @@ class Navbar extends Component {
     return (
       <div>
         <div className="navbar-fixed">
-        <nav className="blue darken-3">
+        <nav className="light-blue darken-4">
           <div className="nav-wrapper container">
             <a href="/" className="brand-logo">Jobs Portal</a>
             <a href="/" data-target="mobile-menu" className="sidenav-trigger">

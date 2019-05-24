@@ -68,7 +68,8 @@ public class Runner implements CommandLineRunner {
             "Facebook;https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg",
             "Yahoo;https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg",
             "Microsoft;https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
-            "Takeaway;https://upload.wikimedia.org/wikipedia/de/1/1d/Takeaway.com_logo.svg");
+            "Takeaway;https://upload.wikimedia.org/wikipedia/de/1/1d/Takeaway.com_logo.svg",
+            "Oracle;https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg");
     private static final List<String> LOCATIONS = Arrays.asList("Berlin/Germany", "New York City/US", "Porto/Portugal",
             "Sao Paulo/Brazil");
     private static final String TITLE_TEMPLATE = "%s %s Developer - %s";

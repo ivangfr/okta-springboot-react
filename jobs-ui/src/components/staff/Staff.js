@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Jobs from './Jobs'
 import Search from '../Search'
-import JobModalForm from './JobModalForm'
+import { Link } from 'react-router-dom'
 import M from 'materialize-css';
 
 class Staff extends Component {
@@ -78,12 +78,10 @@ class Staff extends Component {
         </div>
 
         <div className="fixed-action-btn">
-          <button data-target="modal" className="btn-floating modal-trigger btn-large waves-effect waves-light blue">
+          <Link className="btn-floating modal-trigger btn-large waves-effect waves-light blue" to={'/staff/jobs'} component="JobForm">
             <i className="material-icons">add</i>
-          </button>
+          </Link>
         </div>
-
-        <JobModalForm updatingJob={this.state.updatingJob} saveJob={this.saveJob} />
       </div >
     )
   }
