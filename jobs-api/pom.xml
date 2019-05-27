@@ -37,7 +37,7 @@
 		</dependency>
 
 		<!-- Oauth2 & Okta -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.security.oauth.boot</groupId>
 			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
 			<version>${oauth2-autoconfigure.version}</version>
@@ -46,7 +46,7 @@
 			<groupId>com.okta.spring</groupId>
 			<artifactId>okta-spring-boot-starter</artifactId>
 			<version>${okta-spring.version}</version>
-		</dependency> -->
+		</dependency>
 
 		<!-- Swagger2 -->
         <dependency>

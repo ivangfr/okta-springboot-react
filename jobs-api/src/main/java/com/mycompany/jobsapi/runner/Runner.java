@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class Runner implements CommandLineRunner {
 
-    private int numOfJobs = 30;
+    private int numOfJobs = 100;
 
     private final JobService jobService;
 

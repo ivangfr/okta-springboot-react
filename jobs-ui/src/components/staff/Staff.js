@@ -1,68 +1,53 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import M from 'materialize-css';
-import axios from 'axios';
+import { withAuth } from '@okta/okta-react'
+import M from 'materialize-css'
+import axios from 'axios'
 import JobList from './JobList'
 import Search from '../misc/Search'
 
 class Staff extends Component {
   state = {
-    jobs: [],
-    updatingJob: null
+    jobs: []
   }
 
   componentDidMount() {
-    const floatingActionButton = document.querySelectorAll('.fixed-action-btn');
+    const floatingActionButton = document.querySelectorAll('.fixed-action-btn')
     M.FloatingActionButton.init(floatingActionButton, {
       direction: 'button'
-    });
+    })
 
     this.refresh()
   }
 
-  refresh = (e) => {
-    axios.get('http://localhost:8080/api/jobs')
+  refresh = async () => {
+    axios.get('http://localhost:8080/api/jobs', {
+      headers: {
+        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+      }
+    })
       .then(response => {
         this.setState({
-          jobs: response.data.content,
-          updatingJob: null
+          jobs: response.data.content
         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        M.toast({html: error, classes: 'rounded'})
+      })
   }
 
-  deleteJob = (id) => {
-    axios.delete('http://localhost:8080/api/jobs/' + id)
-      .then(() => this.refresh())
-      .catch(error => console.log(error))
-  }
-
-  saveJob = (job) => {
-    const id = job.id
-
-    let method = 'POST'
-    let url = 'http://localhost:8080/api/jobs'
-    if (id) {
-      method = 'PUT'
-      url += '/' + id
-    }
-
-    axios({
-      method: method,
-      url: url,
+  deleteJob = async (id) => {
+    axios.delete('http://localhost:8080/api/jobs/' + id, {
       headers: {
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify(job)
-    }).then(() => {
-      this.refresh()
+        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+      }
     })
-  }
-
-  updateJob = (job) => {
-    this.setState({
-      updatingJob: job
-    })
+      .then(() => this.refresh())
+      .catch(error => {
+        console.log(error)
+        M.toast({html: error, classes: 'rounded'})
+      })
   }
 
   render() {
@@ -73,7 +58,6 @@ class Staff extends Component {
           <JobList
             jobs={this.state.jobs}
             deleteJob={this.deleteJob}
-            updateJob={this.updateJob}
           />
         </div>
 
@@ -87,4 +71,4 @@ class Staff extends Component {
   }
 }
 
-export default Staff
+export default withAuth(Staff)

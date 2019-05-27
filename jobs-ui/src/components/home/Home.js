@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import JobList from './JobList'
+import M from 'materialize-css'
 
 class Home extends Component {
   state = {
@@ -14,7 +15,10 @@ class Home extends Component {
           jobs: response.data
         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        M.toast({html: error, classes: 'rounded'})
+      })
   }
 
   render() {

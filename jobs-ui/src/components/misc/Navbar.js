@@ -1,30 +1,33 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withAuth } from '@okta/okta-react'
-import M from 'materialize-css';
+import M from 'materialize-css'
 
 class Navbar extends Component {
   state = {
-    authenticated: null
+    authenticated: null,
+    user: null
   }
 
   async componentDidMount() {
-    this.checkAuthentication();
+    this.checkAuthentication()
 
-    const sidenav = document.querySelectorAll('.sidenav');
-    M.Sidenav.init(sidenav);
+    const sidenav = document.querySelectorAll('.sidenav')
+    M.Sidenav.init(sidenav)
   }
 
   async componentDidUpdate() {
-    this.checkAuthentication();
+    this.checkAuthentication()
   }
 
   checkAuthentication = async () => {
-    const authenticated = await this.props.auth.isAuthenticated();
+    const authenticated = await this.props.auth.isAuthenticated()
     if (authenticated !== this.state.authenticated) {
+      const user = await this.props.auth.getUser()
       this.setState({
-        authenticated
-      });
+        authenticated,
+        user
+      })
     }
   }
 
@@ -33,7 +36,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const logInOut = this.state.authenticated ? "Logout" : "Login"
+    const logInOut = this.state.authenticated ? this.state.user.preferred_username + ", Logout" : "Login"
     return (
       <div>
         <div className="navbar-fixed">

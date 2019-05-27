@@ -43,7 +43,8 @@ public class JobController {
     }
 
     @GetMapping
-    public Page<JobDto> getAllJobs(Pageable pageable) {
+    public Page<JobDto> getAllJobs(Pageable pageable, Principal principal) {
+        log.info("Request to get a page of jobs made by {}", principal.getName());
         Page<Job> pageJobs = jobService.getAllJobsByPage(pageable);
         return pageJobs.map(new Function<Job,JobDto>() {
             @Override
@@ -62,7 +63,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public JobDto getJobById(@PathVariable String id) {
+    public JobDto getJobById(@PathVariable String id, Principal principal) {
+        log.info("Request to get a job made by {}", principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         return mapperFacade.map(job, JobDto.class);
     }
@@ -70,7 +72,7 @@ public class JobController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public JobDto createJob(@Valid @RequestBody CreateJobDto createJobDto, Principal principal) {
-        // log.info("Request to create a job made by {}", principal.getName());
+        log.info("Request to create a job made by {}", principal.getName());
         Job job = mapperFacade.map(createJobDto, Job.class);
         job = jobService.saveJob(job);
         return mapperFacade.map(job, JobDto.class);
@@ -78,7 +80,7 @@ public class JobController {
 
     @DeleteMapping("/{id}")
     public JobDto deleteJob(@PathVariable String id, Principal principal) {
-        // log.info("Request to delete a job made by {}", principal.getName());
+        log.info("Request to delete a job made by {}", principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         jobService.deleteJob(job);
         return mapperFacade.map(job, JobDto.class);
@@ -86,7 +88,7 @@ public class JobController {
 
     @PutMapping("/{id}")
     public JobDto updateJob(@PathVariable String id, @Valid @RequestBody UpdateJobDto updateJobDto, Principal principal) {
-        // log.info("Request to update a job made by {}", principal.getName());
+        log.info("Request to update a job made by {}", principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         mapperFacade.map(updateJobDto, job);
         jobService.saveJob(job);

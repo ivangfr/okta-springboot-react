@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import M from 'materialize-css';
-import axios from 'axios';
+import { withAuth } from '@okta/okta-react'
+import M from 'materialize-css'
+import axios from 'axios'
 import JobCardHome from '../home/JobCard'
 import JobCardCustomer from '../customer/JobCard'
 
@@ -18,41 +19,47 @@ class JobForm extends Component {
     const { id, value } = e.target
     this.setState({
       [id]: value
-    });
+    })
   }
 
-  redirectJobsList = (e) => {
+  redirectJobList = () => {
     this.props.history.push("/staff")
   }
 
-  componentDidMount() {
-    const id = this.props.match.params.job_id;
+  async componentDidMount() {
+    const id = this.props.match.params.job_id
     if (id) {
-      axios.get('http://localhost:8080/api/jobs/' + id)
-      .then(response => {
-        const job = response.data;
-        this.setState({
-          id: job.id,
-          title: job.title,
-          company: job.company,
-          logoUrl: job.logoUrl,
-          description: job.description,
-          createDate: job.createDate
-        })
+      axios.get('http://localhost:8080/api/jobs/' + id, {
+        headers: {
+          'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        }
       })
-      .catch(error => console.log(error))
+        .then(response => {
+          const job = response.data
+          this.setState({
+            id: job.id,
+            title: job.title,
+            company: job.company,
+            logoUrl: job.logoUrl,
+            description: job.description,
+            createDate: job.createDate
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          M.toast({html: error, classes: 'rounded'})
+        })
     }
 
-    M.Tabs.init(document.querySelectorAll('.tabs'));
+    M.Tabs.init(document.querySelectorAll('.tabs'))
   }
 
-  saveJob = () => {
+  saveJob = async () => {
     if (!this.validateForm()) {
-      return;
+      return
     }
 
     const job = this.state
-
     let method = 'POST'
     let url = 'http://localhost:8080/api/jobs'
     if (job.id) {
@@ -64,12 +71,18 @@ class JobForm extends Component {
       method: method,
       url: url,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
       },
       data: JSON.stringify(job)
-    }).then(() => {
-      this.redirectJobsList();
     })
+      .then(() => {
+        this.redirectJobList()
+      })
+      .catch(error => {
+        console.log(error)
+        M.toast({html: error, classes: 'rounded'})
+      })
   }
 
   validateForm = () => {
@@ -86,7 +99,7 @@ class JobForm extends Component {
   componentDidUpdate() {
     // It is needed to avoid labels overlapping prefilled content 
     // Besides, the labels of this form component have "active" className
-    M.updateTextFields();
+    M.updateTextFields()
 
     // It is needed otherwise, on editing, the textarea will start with
     // just 2 lines
@@ -101,7 +114,7 @@ class JobForm extends Component {
   }
 
   render() {
-    const job = this.state.id ? this.state : this.mockJobIdAndCreateDate();
+    const job = this.state.id ? this.state : this.mockJobIdAndCreateDate()
     const idFieldVisibility = this.state.id ? { display: "block" } : { display: "none" }
 
     const form = (
@@ -143,7 +156,7 @@ class JobForm extends Component {
         </form>
         <div className="row">
           <div className="input-field col s12">
-            <button className="modal-close waves-effect waves-green btn-flat right" onClick={this.redirectJobsList}>Cancel</button>
+            <button className="modal-close waves-effect waves-green btn-flat right" onClick={this.redirectJobList}>Cancel</button>
             <button className="modal-close waves-effect waves-green btn-flat right" onClick={this.saveJob}>Save</button>
           </div>
         </div>
@@ -175,4 +188,4 @@ class JobForm extends Component {
   }
 }
 
-export default JobForm
+export default withAuth(JobForm)

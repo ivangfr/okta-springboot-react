@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { withAuth } from '@okta/okta-react'
 import axios from 'axios'
+import M from 'materialize-css'
 import JobList from './JobList'
 import Search from '../misc/Search'
 
@@ -8,14 +10,21 @@ class Customer extends Component {
     jobs: []
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8080/api/jobs')
+  async componentDidMount() {
+    axios.get('http://localhost:8080/api/jobs', {
+      headers: {
+        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+      }
+    })
       .then(response => {
         this.setState({
           jobs: response.data.content
         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        M.toast({html: error, classes: 'rounded'})
+      })
   }
 
   render() {
@@ -28,4 +37,4 @@ class Customer extends Component {
   }
 }
 
-export default Customer
+export default withAuth(Customer)

@@ -20,8 +20,6 @@ management:
 
 okta:
   oauth2:
-    # issuer: https://${OKTA_DOMAIN}/oauth2/default
-    issuer: https://dev-279724.okta.com/oauth2/default
-    # clientId: ${OKTA_CLIENT_ID}
-    clientId: 0oaky2d71EXMSsscC356
+    issuer: https://${OKTA_DOMAIN}/oauth2/default
+    clientId: ${OKTA_CLIENT_ID}
     rolesClaim: groups
