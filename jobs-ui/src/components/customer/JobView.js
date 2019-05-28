@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withAuth } from '@okta/okta-react'
-import axios from 'axios'
 import M from 'materialize-css'
 import Logo from '../misc/Logo'
 import TimesAgo from '../misc/TimesAgo'
+import API from '../misc/api'
 
 class JobView extends Component {
   state = {
@@ -12,7 +12,8 @@ class JobView extends Component {
 
   async componentDidMount() {
     const id = this.props.match.params.job_id;
-    axios.get('http://localhost:8080/api/jobs/' + id, {
+
+    API.get(`jobs/${id}`, {
       headers: {
         'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
       }
@@ -24,7 +25,7 @@ class JobView extends Component {
       })
       .catch(error => {
         console.log(error)
-        M.toast({html: error, classes: 'rounded'})
+        M.toast({ html: error, classes: 'rounded' })
       })
   }
 

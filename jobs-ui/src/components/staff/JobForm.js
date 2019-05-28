@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withAuth } from '@okta/okta-react'
 import M from 'materialize-css'
-import axios from 'axios'
 import JobCardHome from '../home/JobCard'
 import JobCardCustomer from '../customer/JobCard'
+import API from '../misc/api'
 
 class JobForm extends Component {
   state = {
@@ -29,7 +29,7 @@ class JobForm extends Component {
   async componentDidMount() {
     const id = this.props.match.params.job_id
     if (id) {
-      axios.get('http://localhost:8080/api/jobs/' + id, {
+      API.get(`jobs/${id}`, {
         headers: {
           'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
         }
@@ -67,7 +67,7 @@ class JobForm extends Component {
       url += '/' + job.id
     }
 
-    axios({
+    API.request({
       method: method,
       url: url,
       headers: {

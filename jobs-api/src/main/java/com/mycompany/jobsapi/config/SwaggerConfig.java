@@ -72,8 +72,7 @@ public class SwaggerConfig {
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(regex("/api/jobs.*"))
-                .forHttpMethods(httpMethod -> Arrays.asList(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.PATCH).contains(httpMethod))
+                .forPaths(regex("/api/jobs.?|.*[^/last6]"))
                 .build();
     }
 

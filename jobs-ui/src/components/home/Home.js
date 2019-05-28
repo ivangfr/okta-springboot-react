@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import JobList from './JobList'
 import M from 'materialize-css'
+import JobList from './JobList'
+import API from '../misc/api'
 
 class Home extends Component {
   state = {
@@ -9,7 +9,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8080/api/jobs/last6')
+    API.get(`jobs/last6`)
       .then(response => {
         this.setState({
           jobs: response.data
@@ -17,7 +17,7 @@ class Home extends Component {
       })
       .catch(error => {
         console.log(error)
-        M.toast({html: error, classes: 'rounded'})
+        M.toast({ html: error, classes: 'rounded' })
       })
   }
 
