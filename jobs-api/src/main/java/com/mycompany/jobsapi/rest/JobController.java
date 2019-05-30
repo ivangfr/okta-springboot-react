@@ -2,7 +2,6 @@ package com.mycompany.jobsapi.rest;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -15,6 +14,8 @@ import com.mycompany.jobsapi.service.JobService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 
@@ -42,20 +44,27 @@ public class JobController {
         this.mapperFacade = mapperFacade;
     }
 
+    @ApiOperation(
+            value = "Get all jobs with pagination",
+            notes = "To sort the results by a specified field (ex. 'createDate'), use in 'sort' field a string like: createDate,[asc|desc]")
     @GetMapping
-    public Page<JobDto> getAllJobs(Pageable pageable, Principal principal) {
+    public Page<JobDto> getAllJobs(
+            @PageableDefault(size=10, page=0, sort={"createDate"}, direction=Direction.DESC) Pageable pageable,
+            Principal principal) {
         log.info("Request to get a page of jobs (offset = {}, pageSize = {}) made by {}", pageable.getOffset(), pageable.getPageSize(), principal.getName());
         return jobService.getAllJobsByPage(pageable).map(job -> mapperFacade.map(job, JobDto.class));
     }
 
-    @GetMapping("/last6")
-    public List<JobDto> getLast6Jobs() {
-        return jobService.getLast6Jobs()
+    @ApiOperation("Get the newest jobs")
+    @GetMapping("/newest/{number}")
+    public List<JobDto> getNewestJobs(@PathVariable int number) {
+        return jobService.getNewestJobs(number)
                 .stream()
                 .map(job -> mapperFacade.map(job, JobDto.class))
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation("Get a job by id")
     @GetMapping("/{id}")
     public JobDto getJobById(@PathVariable String id, Principal principal) {
         log.info("Request to get a job with id {} made by {}", id, principal.getName());
@@ -63,6 +72,7 @@ public class JobController {
         return mapperFacade.map(job, JobDto.class);
     }
 
+    @ApiOperation("Create a job")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public JobDto createJob(@Valid @RequestBody CreateJobDto createJobDto, Principal principal) {
@@ -72,6 +82,7 @@ public class JobController {
         return mapperFacade.map(job, JobDto.class);
     }
 
+    @ApiOperation("Delete a job")
     @DeleteMapping("/{id}")
     public JobDto deleteJob(@PathVariable String id, Principal principal) {
         log.info("Request to delete a job with id {} made by {}", id, principal.getName());
@@ -80,6 +91,7 @@ public class JobController {
         return mapperFacade.map(job, JobDto.class);
     }
 
+    @ApiOperation("Update a job")
     @PutMapping("/{id}")
     public JobDto updateJob(@PathVariable String id, @Valid @RequestBody UpdateJobDto updateJobDto, Principal principal) {
         log.info("Request to update a job with id {} made by {}", id, principal.getName());

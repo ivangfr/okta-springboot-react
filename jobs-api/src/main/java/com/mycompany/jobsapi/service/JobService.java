@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface JobService {
 
-    List<Job> getLast6Jobs();
+    List<Job> getNewestJobs(int number);
 
     Page<Job> getAllJobsByPage(Pageable pageable);
 

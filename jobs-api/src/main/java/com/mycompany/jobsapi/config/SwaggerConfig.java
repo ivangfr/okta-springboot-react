@@ -1,6 +1,7 @@
 package com.mycompany.jobsapi.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
+import static springfox.documentation.builders.PathSelectors.any;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 import java.lang.reflect.Type;
@@ -18,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 
 import springfox.documentation.builders.AlternateTypeBuilder;
 import springfox.documentation.builders.AlternateTypePropertyBuilder;
@@ -72,7 +72,7 @@ public class SwaggerConfig {
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(regex("/api/jobs.?|.*[^/last6]"))
+                .forPaths(any()) // It is wrong! The endpoint /api/jobs/newest/{number} is public!
                 .build();
     }
 

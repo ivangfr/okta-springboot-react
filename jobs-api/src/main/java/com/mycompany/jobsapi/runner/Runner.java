@@ -26,7 +26,7 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!jobService.getLast6Jobs().isEmpty()) {
+        if (!jobService.getNewestJobs(1).isEmpty()) {
             log.info("Database has already data!");
             return;
         }

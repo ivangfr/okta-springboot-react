@@ -7,6 +7,7 @@ import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.repository.JobRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,13 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getLast6Jobs() {
-        return jobRepository.findTop6ByOrderByCreateDateDesc();
+    public List<Job> getNewestJobs(int number) {
+        return jobRepository.findTopByOrderByCreateDateDesc(PageRequest.of(0, number));
     }
 
     @Override
     public Page<Job> getAllJobsByPage(Pageable pageable) {
-        return jobRepository.findAllByOrderByCreateDateDesc(pageable);
+        return jobRepository.findAll(pageable);
     }
 
     @Override
