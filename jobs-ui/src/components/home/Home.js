@@ -19,13 +19,21 @@ class Home extends Component {
         console.log(error)
         M.toast({ html: error, classes: 'rounded' })
       })
+
+    M.Parallax.init(document.querySelectorAll('.parallax'));
   }
 
   render() {
     return (
-      <div className="container">
-        <h5>Last 6 jobs added</h5>
-        <JobList jobs={this.state.jobs} />
+      <div>
+        <div className="parallax-container">
+          <div className="parallax"><img src="/nyc.jpg" alt="" /></div>
+        </div>
+        <div className="section white">
+          <div className="container">
+            <JobList jobs={this.state.jobs} />
+          </div>
+        </div>
       </div>
     )
   }

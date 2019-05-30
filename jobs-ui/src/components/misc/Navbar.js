@@ -36,7 +36,8 @@ class Navbar extends Component {
   }
 
   render() {
-    const logInOut = this.state.authenticated ? this.state.user.preferred_username + ", Logout" : "Login"
+    const username = this.state.authenticated && this.state.user.preferred_username
+    const logInOut = this.state.authenticated ? "Logout" : "Login"
     return (
       <div>
         <div className="navbar-fixed">
@@ -47,6 +48,7 @@ class Navbar extends Component {
                 <i className="material-icons">menu</i>
               </a>
               <ul id="nav" className="right hide-on-med-and-down">
+                <li>{username}</li>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/customer">Customer</Link></li>
                 <li><Link to="/staff">Staff</Link></li>

@@ -8,11 +8,22 @@ import Pagination from '../misc/Pagination';
 
 class Customer extends Component {
   state = {
-    jobs: []
+    jobs: [],
+    pagination: {
+      first: null,
+      last: null,
+      number: null,
+      size: null,
+      totalElements: null,
+      totalPages: null
+    }
   }
 
+  paginationDefaultNumber = 0;
+  paginationDefaultSize = 10;
+
   async componentDidMount() {
-    this.getAllJobs(0, 10)
+    this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
   }
 
   getAllJobs = async (page, size) => {
@@ -22,8 +33,17 @@ class Customer extends Component {
       }
     })
       .then(response => {
+        const { content, first, last, number, size, totalElements, totalPages } = response.data
         this.setState({
-          jobs: response.data.content
+          jobs: content,
+          pagination: {
+            first,
+            last,
+            number,
+            size,
+            totalElements,
+            totalPages
+          }
         })
       })
       .catch(error => {
@@ -50,14 +70,14 @@ class Customer extends Component {
   }
 
   searchJob = async (id) => {
-    id ? this.getJobById(id) : this.getAllJobs(0, 10)
+    id ? this.getJobById(id) : this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
   }
 
   render() {
     return (
       <div className="container">
         <Search searchJob={this.searchJob} />
-        <Pagination className="center" />
+        <Pagination pagination={this.state.pagination} getAllJobs={this.getAllJobs} className="center" />
         <JobList jobs={this.state.jobs} />
       </div>
     )

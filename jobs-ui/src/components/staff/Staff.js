@@ -5,11 +5,23 @@ import M from 'materialize-css'
 import JobList from './JobList'
 import Search from '../misc/Search'
 import API from '../misc/api'
+import Pagination from '../misc/Pagination';
 
 class Staff extends Component {
   state = {
-    jobs: []
+    jobs: [],
+    pagination: {
+      first: null,
+      last: null,
+      number: null,
+      size: null,
+      totalElements: null,
+      totalPages: null
+    }
   }
+
+  paginationDefaultNumber = 0;
+  paginationDefaultSize = 10;
 
   componentDidMount() {
     const floatingActionButton = document.querySelectorAll('.fixed-action-btn')
@@ -17,7 +29,7 @@ class Staff extends Component {
       direction: 'button'
     })
 
-    this.getAllJobs(0, 10)
+    this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
   }
 
   getAllJobs = async (page, size) => {
@@ -27,8 +39,17 @@ class Staff extends Component {
       }
     })
       .then(response => {
+        const { content, first, last, number, size, totalElements, totalPages } = response.data
         this.setState({
-          jobs: response.data.content
+          jobs: content,
+          pagination: {
+            first,
+            last,
+            number,
+            size,
+            totalElements,
+            totalPages
+          }
         })
       })
       .catch(error => {
@@ -55,20 +76,25 @@ class Staff extends Component {
   }
 
   deleteJob = async (id) => {
-    API.delete(`jobs/${id}`, {
-      headers: {
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
-      }
-    })
-      .then(() => this.getAllJobs(0, 10))
-      .catch(error => {
-        console.log(error)
-        M.toast({ html: error, classes: 'rounded' })
+    if (window.confirm(`Delete job with id ${id}`)) {
+      API.delete(`jobs/${id}`, {
+        headers: {
+          'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        }
       })
+        .then(() => {
+          const {number, size} = this.state.pagination
+          this.getAllJobs(number, size)
+        })
+        .catch(error => {
+          console.log(error)
+          M.toast({ html: error, classes: 'rounded' })
+        })
+    }
   }
 
   searchJob = async (id) => {
-    id ? this.getJobById(id) : this.getAllJobs(0, 10)
+    id ? this.getJobById(id) : this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
   }
 
   render() {
@@ -76,6 +102,7 @@ class Staff extends Component {
       <div>
         <div className="container">
           <Search searchJob={this.searchJob} />
+          <Pagination pagination={this.state.pagination} getAllJobs={this.getAllJobs} className="center" />
           <JobList
             jobs={this.state.jobs}
             deleteJob={this.deleteJob}
