@@ -2,8 +2,15 @@ spring:
   application:
     name: jobs-api
   data:
-    mongodb:
-      uri: mongodb://${MONGODB_HOST:localhost}:${MONGODB_PORT:27017}/jobsdb
+    elasticsearch:
+      cluster-name: docker-es-cluster
+      cluster-nodes: ${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_PORT:9300}
+
+okta:
+  oauth2:
+    issuer: https://${OKTA_DOMAIN}/oauth2/default
+    clientId: ${OKTA_CLIENT_ID}
+    rolesClaim: groups
 
 management:
   security:
@@ -14,12 +21,3 @@ management:
   endpoint:
     health:
       show-details: always
-  health:
-    binders:
-      enabled: true
-
-okta:
-  oauth2:
-    issuer: https://${OKTA_DOMAIN}/oauth2/default
-    clientId: ${OKTA_CLIENT_ID}
-    rolesClaim: groups

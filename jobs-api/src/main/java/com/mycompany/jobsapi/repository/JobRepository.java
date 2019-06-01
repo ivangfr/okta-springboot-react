@@ -1,14 +1,9 @@
 package com.mycompany.jobsapi.repository;
 
-import java.util.List;
-
 import com.mycompany.jobsapi.model.Job;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-public interface JobRepository extends MongoRepository<Job, String> {
-
-    List<Job> findTopByOrderByCreateDateDesc(Pageable pageable);
+public interface JobRepository extends ElasticsearchRepository<Job, String> {
 
 }

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.rest.dto.CreateJobDto;
 import com.mycompany.jobsapi.rest.dto.JobDto;
+import com.mycompany.jobsapi.rest.dto.SearchDto;
 import com.mycompany.jobsapi.rest.dto.UpdateJobDto;
 import com.mycompany.jobsapi.service.JobService;
 
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,8 +58,12 @@ public class JobController {
     }
 
     @ApiOperation("Get the newest jobs")
-    @GetMapping("/newest/{number}")
-    public List<JobDto> getNewestJobs(@PathVariable int number) {
+    @GetMapping("/newest")
+    public List<JobDto> getNewestJobs(@RequestParam(required = false) int number) {
+        if (number > 10) {
+            log.warn("The parameter number cannot be bigger than 10");
+            number = 10;
+        }
         return jobService.getNewestJobs(number)
                 .stream()
                 .map(job -> mapperFacade.map(job, JobDto.class))
@@ -99,6 +105,17 @@ public class JobController {
         mapperFacade.map(updateJobDto, job);
         jobService.saveJob(job);
         return mapperFacade.map(job, JobDto.class);
+    }
+
+    @ApiOperation(
+            value = "Search jobs",
+            notes = "This endpoint does a query for the 'string' informed in the Job fields: 'title', 'company' and 'description'\n" +
+                    "To sort the results by a specified field (ex. 'createDate'), use in 'sort' field a string like: createDate,[asc|desc]")
+    @PutMapping("/search")
+    public Page<Job> searchNews(@Valid @RequestBody SearchDto searchDto, Principal principal,
+        @PageableDefault(size=10, page=0, sort={"createDate"}, direction=Direction.DESC) Pageable pageable) {
+        log.info("Request to search a job with text {} made by {}", searchDto.getText(), principal.getName());
+        return jobService.search(searchDto.getText(), pageable);
     }
 
 }

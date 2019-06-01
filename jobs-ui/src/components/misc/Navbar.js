@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { withAuth } from '@okta/okta-react'
 import M from 'materialize-css'
 
@@ -36,6 +36,7 @@ class Navbar extends Component {
   }
 
   render() {
+    const linkVisibility = this.state.authenticated ? {"display": "block"} : {"display": "none"}
     const username = this.state.authenticated && this.state.user.preferred_username
     const logInOut = this.state.authenticated ? "Logout" : "Login"
     return (
@@ -48,11 +49,11 @@ class Navbar extends Component {
                 <i className="material-icons">menu</i>
               </a>
               <ul id="nav" className="right hide-on-med-and-down">
-                <li>{username}</li>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/customer">Customer</Link></li>
-                <li><Link to="/staff">Staff</Link></li>
-                <li><Link to="/" onClick={this.logHandleLogInOut}>{logInOut}</Link></li>
+                <li className="light-blue darken-3">{username}</li>
+                <li><NavLink exact to="/">Home</NavLink></li>
+                <li><NavLink exact to="/customer" style={linkVisibility}>Customer</NavLink></li>
+                <li><NavLink exact to="/staff" style={linkVisibility}>Staff</NavLink></li>
+                <li><NavLink exact to="/login" onClick={this.logHandleLogInOut}>{logInOut}</NavLink></li>
               </ul>
             </div>
           </nav>

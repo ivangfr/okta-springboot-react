@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class Search extends Component {
   state = {
-    id: ''
+    searchText: ''
   }
 
   handleChange = (e) => {
@@ -14,7 +14,7 @@ class Search extends Component {
 
   handleEnterPressed = (e) => {
     if (e.key === 'Enter') {
-      this.props.searchJob(this.state.id)
+      this.props.searchJob(this.state.searchText)
     }
   }
 
@@ -25,8 +25,8 @@ class Search extends Component {
           <div className="col s12">
             <div className="input-field">
               <i className="material-icons prefix">search</i>
-              <input id="id" type="text" onChange={this.handleChange} onKeyPress={this.handleEnterPressed} />
-              <label htmlFor="id">Search jobs</label>
+              <input id="searchText" type="text" onChange={this.handleChange} onKeyPress={this.handleEnterPressed} />
+              <label htmlFor="searchText">Search jobs</label>
             </div>
           </div>
         </div>

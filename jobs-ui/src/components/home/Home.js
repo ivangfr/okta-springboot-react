@@ -9,7 +9,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    API.get(`jobs/newest/8`)
+    API.get(`jobs/newest?number=8`)
       .then(response => {
         this.setState({
           jobs: response.data

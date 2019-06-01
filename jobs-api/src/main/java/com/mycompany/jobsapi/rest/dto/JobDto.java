@@ -1,6 +1,6 @@
 package com.mycompany.jobsapi.rest.dto;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,6 +16,6 @@ public class JobDto {
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createDate;
+    private Date createDate;
 
 }

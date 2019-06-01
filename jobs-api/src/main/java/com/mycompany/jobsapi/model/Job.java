@@ -1,30 +1,38 @@
 package com.mycompany.jobsapi.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import lombok.Data;
 
 @Data
-@Document(collection = "jobs")
+@Document(indexName = "jobs", type = "jobs")
 public class Job {
 
     @Id
     private String id;
 
+    @Field(type = FieldType.Text)
     private String title;
+    
+    @Field(type = FieldType.Text)
     private String company;
+    
+    @Field(type = FieldType.Text)
     private String logoUrl;
+    
+    @Field(type = FieldType.Text)
     private String description;
 
-    @CreatedDate
-    private LocalDateTime createDate;
+    @Field(type = FieldType.Date)
+    private Date createDate;
 
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    public Job() {
+        this.createDate = new Date();
+    }
 
 }

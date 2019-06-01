@@ -16,14 +16,15 @@ class Customer extends Component {
       size: null,
       totalElements: null,
       totalPages: null
-    }
+    },
+    searchText: ''
   }
 
-  paginationDefaultNumber = 0;
-  paginationDefaultSize = 10;
+  pageDefaultNumber = 0;
+  pageDefaultSize = 10;
 
   async componentDidMount() {
-    this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
+    this.getAllJobs(this.pageDefaultNumber, this.pageDefaultSize)
   }
 
   getAllJobs = async (page, size) => {
@@ -52,15 +53,25 @@ class Customer extends Component {
       })
   }
 
-  getJobById = async (id) => {
-    API.get(`jobs/${id}`, {
+  getJobsWithText = async (text, page, size) => {
+    API.put(`jobs/search?page=${page}&size=${size}`, { 'text': text }, {
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
       }
     })
       .then(response => {
+        const { content, first, last, number, size, totalElements, totalPages } = response.data
         this.setState({
-          jobs: [response.data]
+          jobs: content,
+          pagination: {
+            first,
+            last,
+            number,
+            size,
+            totalElements,
+            totalPages
+          }
         })
       })
       .catch(error => {
@@ -69,15 +80,24 @@ class Customer extends Component {
       })
   }
 
-  searchJob = async (id) => {
-    id ? this.getJobById(id) : this.getAllJobs(this.paginationDefaultNumber, this.paginationDefaultSize)
+  searchJob = async (searchText, pageNumber, pageSize) => {
+    this.setState({
+      searchText
+    })
+    searchText ? this.getJobsWithText(searchText, pageNumber, pageSize) : this.getAllJobs(pageNumber, pageSize)
   }
 
   render() {
     return (
       <div className="container">
         <Search searchJob={this.searchJob} />
-        <Pagination pagination={this.state.pagination} getAllJobs={this.getAllJobs} className="center" />
+
+        <Pagination className="center"
+          pagination={this.state.pagination}
+          searchText={this.state.searchText}
+          searchJob={this.searchJob}
+        />
+
         <JobList jobs={this.state.jobs} />
       </div>
     )

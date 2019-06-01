@@ -14,6 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/jobs/newest").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/jobs").hasAnyAuthority("JOBS_CUSTOMER", "JOBS_STAFF", "SCOPE_groups")
                 .antMatchers(HttpMethod.GET, "/api/jobs/*").hasAnyAuthority("JOBS_CUSTOMER", "JOBS_STAFF")
+                .antMatchers(HttpMethod.PUT, "/api/jobs/search").hasAnyAuthority("JOBS_CUSTOMER", "JOBS_STAFF")
                 .antMatchers(HttpMethod.POST, "/api/jobs").hasAuthority("JOBS_STAFF")
                 .antMatchers(HttpMethod.PUT, "/api/jobs/*").hasAuthority("JOBS_STAFF")
                 .antMatchers(HttpMethod.DELETE, "/api/jobs/*").hasAuthority("JOBS_STAFF")

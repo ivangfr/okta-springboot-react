@@ -1,44 +1,59 @@
 # `springboot-react-okta`
 
-The goal of this project is to implement an application where an user can manage (create/read/update/delete) jobs. For it, we will create two microservices: a backend Restful API called `jobs-api` and a frontend user interface called `jobs-ui`. Furthermore, we will use OKTA to secure the application.
+The goal of this project is to implement an application where an user can manage (create/read/update/delete) jobs. For it, we will create two microservices: a backend Restful API called `jobs-api` and a frontend user interface called `jobs-ui`. Furthermore, we will use Okta to secure the application.
 
-# Microservices
+## Project diagram
 
-## jobs-api
+![project-diagram](images/project-diagram.png)
 
-Spring-boot Web Java application that exposes a REST API for managing or retrieving jobs. Its endpoints are secured. `jobs-api` uses OKTA to handle the authentication and authorization.
+## Microservices
 
-## jobs-ui
+### jobs-api
 
-React UI application that users will use to manage jobs easily. In order to access it, you must login. The authentication is handled by OKTA.
+Spring-boot Web Java application that exposes a REST API for managing jobs. It has some endpoints that are secured. `jobs-api` uses Okta to handle the authentication and authorization. The table below shows the authorization role required to access the sensitive endpoints.
 
-# Configuring OKTA
+| Endpoint                | Role                        |
+| ----------------------- | --------------------------- |
+| `GET /actuator/*`       |                             |
+| `GET /api/jobs/newest`  |                             |
+| `POST /api/jobs`        | `JOBS_STAFF`                |
+| `PUT /api/jobs/{id}`    | `JOBS_STAFF`                |
+| `DELETE /api/jobs/{id}` | `JOBS_STAFF`                |
+| `GET /api/jobs/{id}`    | `JOBS_STAFF, JOBS_CUSTOMER` |
+| `PUT /api/jobs/search`  | `JOBS_STAFF, JOBS_CUSTOMER` |
 
-First of all, you must to create a free account at https://developer.okta.com/signup/. Once you it, log in and let's start the configuration.
+### jobs-ui
 
-## Add an OpenID Connect Client in Okta
+ReactJS application where customers can look for a job and staff members can handle jobs. In order to access it, the person must login. The authentication is handled by Okta.
 
-- In Okta Developer Dashboard, click on `Applications` then on `Add Application` button.
+## Configuring Okta
 
-- Select `Single-Page App` and click on the `Next` button.
+First of all, you must create a free account at https://developer.okta.com/signup/. Once you have it, log in and let's start the configuration.
+
+### Add an OpenID Connect Client
+
+- In Okta Developer Dashboard, click on `Applications` and then on `Add Application` button.
+
+- Select `Single-Page App` and click on `Next` button.
 
 - Enter the following values in the form
 
 | Setting | Value |
 | ------- | ----- |
-| App Name | My Jobs |
+| App Name | Jobs Portal SPA |
 | Base URIs | http://localhost:3000 |
 | Login redirect URIs | http://localhost:3000/implicit/callback |
 | Grant Types Allowed | Implicit |
 
-- After the application is created, there are some values that you will need in the overal project configuration.
+- After the application is created, there are some values that you will need during all project configuration and execution.
 
-| Setting | Where to Find |
-| ------- | ------------- |
-| Client ID | In the applications list, or on the `General` tab of a specific application. |
-| Org URL | On the home screen of the developer dashboard, in the upper right. |
+| Setting | Where to Find | Example (fake) |
+| ------- | ------------- | ------- |
+| Org URL | On the home screen of the developer dashboard, in the upper right. | https://dev-123456.okta.com |
+| Okta Domain| It is the Org URL without `https://` | dev-123456.okta.com |
+| Client ID | In the applications list, or on the `General` tab of a specific application. | 0bcky2d71eXtSsscC123 |
 
-## Enabling groups
+### Enabling groups
 
 - In Okta Developer Dashboard, hover the mouse on `API` then click on `Authorization Servers` menu.
 
@@ -50,9 +65,9 @@ First of all, you must to create a free account at https://developer.okta.com/si
 
 - Go to `Claims` tab.
 
-- Let's add the first claim. So, click on `Add Claim` button and add the settings displayed on the table below. After setting them, click on `Save` button.
+- Let's add the first claim. So, click on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting | Value |   |
+| Setting | Value | Extra info |
 | ------- | ----- | - |
 | Name | groups | |
 | Include in token type | Access Token | |
@@ -60,9 +75,9 @@ First of all, you must to create a free account at https://developer.okta.com/si
 | Filter | Matches regex | .*|
 | Include in | Any scope | |
 
-- Now, let's add the second and last claim. For it, click again on `Add Claim` button and add the settings displayed on the table below. After setting them, click on `Save` button.
+- Now, let's add the second and last claim. For it, click again on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting | Value |   |
+| Setting | Value | Extra info |
 | ------- | ----- | - |
 | Name | groups | |
 | Include in token type | ID Token | |
@@ -70,9 +85,9 @@ First of all, you must to create a free account at https://developer.okta.com/si
 | Filter | Matches regex | .*|
 | Include in | Any scope | |
 
-> Note. The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
+> **Note.** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
 
-## Creating groups
+### Creating groups
 
 - In Okta Developer Dashboard, hover the mouse on `Users` then click on `Groups` menu.
 
@@ -80,11 +95,11 @@ First of all, you must to create a free account at https://developer.okta.com/si
 
 - Let's add the second group. For it, click again on `Add Group` button, enter name `JOBS_CUSTOMER` and for group description type `Jobs Customer Group`. Then, click on `Add Group` button.
 
-## Adding people
+### Adding people
 
 - In Okta Developer Dashboard, hover the mouse on `Users` then click on `People` menu.
 
-- Let's add the first person. He is from jobs staff. So, click on `Add Person` button and enter the following values in the form
+- Let's add the first person. He is a Jobs Portal staff member. So, click on `Add Person` button and enter the following values in the form
 
 | Setting | Value |
 | ------- | ----- |
@@ -94,9 +109,9 @@ First of all, you must to create a free account at https://developer.okta.com/si
 | Groups | JOBS_STAFF |
 | Password | Set by admin |
 
-Enter a password and do not select the checkbox `User must change password on first login`
+Enter a password and DO NOT select the checkbox `User must change password on first login`
 
-- Let's add the second person. She is a jobs customer. For it, click on `Add Person` button and enter the following values in the form
+- Let's add the second person. He is a Jobs Portal customer. For it, click on `Add Person` button and enter the following values in the form
 
 | Setting | Value |
 | ------- | ----- |
@@ -106,97 +121,143 @@ Enter a password and do not select the checkbox `User must change password on fi
 | Groups | JOBS_CUSTOMER |
 | Password | Set by admin |
 
-Enter a password and do not select the checkbox `User must change password on first login`
+Enter a password and DO NOT select the checkbox `User must change password on first login`
 
-# Running microservices with Maven & Npm
+## Running microservices
 
-## jobs-api
+### jobs-api
+
+- In a terminal, go to `springboot-react-okta/jobs-api` folder
+
+- Export the following environment variables. They were obtained while configuring Okta. See **Configuring Okta > Add an OpenID Connect Client** section.
 ```
-cd jobs-api
-./mvnw spring-boot:run
+export OKTA_DOMAIN=...
+export OKTA_CLIENT_ID=...
 ```
 
-## jobs-ui
+- Start `jobs-api` using [`Maven`](https://maven.apache.org/)
 ```
-cd jobs-ui
+./mvnw clean spring-boot:run
+```
+
+- `jobs-api` has a Swagger website: http://localhost:8080/swagger-ui.html
+
+### jobs-ui
+
+- Open a new terminal, go to `springboot-react-okta/jobs-ui` folder
+
+- Start `jobs-api` using [`npm`](https://www.npmjs.com/)
+```
 npm start
 ```
 
-# Useful links
+## Using jobs-ui
 
-### mongo-express
+- Open a browser and access the url: http://localhost:3000
 
-Web-based MongoDB admin interface can be accessed at http://localhost:8081
+- Clink on `Login` in the navigation bar
+
+- The Okta login page will appear. Enter the username & password of the person added at the step **Configuring Okta > Adding people** and click on `Sign In`.
+
+- Done!
+
+> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+
+## Getting Access Token
+
+In order to use just the `jobs-api` endpoints, you must have an access token. For it, we are going to use an online tool called [`OpenId Connect Debugger`](https://oidcdebugger.com/).
+
+Below are the steps to get it:
+
+- In a terminal, export the following environment variables. They were obtained while configuring Okta. See **Configuring Okta > Add an OpenID Connect Client** section.
+```
+export OKTA_DOMAIN=...
+export OKTA_CLIENT_ID=...
+```
+
+- Get Okta Access Token Url
+```
+export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
+client_id=${OKTA_CLIENT_ID}\
+&redirect_uri=https://oidcdebugger.com/debug\
+&scope=openid\
+&response_type=token\
+&response_mode=form_post\
+&state=state\
+&nonce=6jtp65rt9jf"
+
+echo $OKTA_ACCESS_TOKEN_URL
+```
+
+- Copy the Okta Access Token Url from the previous step and past it in a browser
+
+- The Okta login page will appear. Enter the username & password of the person added at the step **Configuring Okta > Adding people** and click on `Sign In`
+
+- It will redirect to `OpenId Connect Debugger` and the `Access token` will be displayed.
+
+## Calling jobs-api endpoints using curl
+
+### GET api/jobs/newest
+
+The `api/jobs/newest` endpoint is public, so we can access it without any problem.
+```
+curl -i http://localhost:8080/api/jobs/newest?number=2
+```
+Response
+```
+HTTP/1.1 200
+[{"id":"uuulE2sBTYouQKNL1uoV", ...},{"id":"u-ulE2sBTYouQKNL1-qb", ...}]
+```
+
+### GET api/jobs without Access Token
+
+Try to get the list of jobs without informing the access token.
+```
+curl -i http://localhost:8080/api/jobs
+```
+Response
+```
+HTTP/1.1 401
+```
+
+### GET api/jobs with Access Token
+
+First, get the access token as explained in **Getting Access Token** section. Then, export the access token to an environment variable.
+```
+export ACCESS_TOKEN=...
+```
+
+Call the get the list of jobs informing the access token
+```
+curl -i http://localhost:8080/api/jobs -H "Authorization: Bearer $ACCESS_TOKEN"
+```
+Response
+```
+HTTP/1.1 200
+{"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
+```
+
+> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+
+## Using jobs-api with Swagger
+
+- First, get the access token as explained in **Getting Access Token** section.
+
+- Open `jobs-api` Swagger website, http://localhost:8080/swagger-ui.html
+
+- Click on `Authorize` button. Paste the access token in the `Value` field prefixed by `Bearer`, like `Bearer <access-token>`. Then, click on `Authorize` and, to finalize, click on `Close`.
+
+- Done! You can now access the sensitive endpoints.
+
+> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+
+# TODO
+
+- fix regular expression in swagger for /api/jobs/newest endpoint.
+- implement search for anything in title, company and description of the job.
 
 # Referances
 
 - https://www.npmjs.com/package/@okta/okta-react
 - https://developer.okta.com/code/react/okta_react_sign-in_widget/
 - https://developer.okta.com/blog/2019/03/06/simple-user-authentication-in-react
-
---------------------------------
-
-## OpenId Connect Debugger
-```
-Authorize URI (required)
-https://${OKTA_DOMAIN}/oauth2/default/v1/authorize
-
-Redirect URI (required)
-https://oidcdebugger.com/debug
-
-Client ID (required)
-0oah...
-
-Scope (required)
-openid
- 
-State
-state
- 
-Nonce 
-wbr...
-
-Response type (required)
- code
- token X
- id_token
-
-Response mode (required)
- query
- form_post X
- fragment
-```
-
-```
-curl -i http://localhost:8080/actuator/health
-curl -i http://localhost:8080/api/jobs
-
-curl -i -X POST http://localhost:8080/api/jobs \
-  -H "Content-Type: application/json" \
-  -d '{"title": "Software Developer", "description": "We are looking for a Software Developer"}'
-
-export TOKEN=...
-
-curl -i -X POST http://localhost:8080/api/jobs \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $TOKEN" \
-  -d '{"title": "Software Developer", "description": "We are looking for a Software Developer"}'
-```
-
-## Using client credentials
-
-https://developer.okta.com/blog/2018/10/16/token-auth-for-java
-
-```
-export CLIENT_ID=...
-export CLIENT_SECRET=...
-
-TOKEN=$(echo -n $CLIENT_ID:$CLIENT_SECRET | base64)
-
-echo -n $TOKEN | base64 -D
-
-curl -i -X POST https://dev-279724.okta.com/oauth2/default/v1/token \
-  -H 'Authorization: Basic $TOKEN' \
-  -d 'grant_type=client_credentials' \
-  -d 'scope=custom_scope'
-```

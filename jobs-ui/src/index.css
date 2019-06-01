@@ -20,7 +20,11 @@ code {
   padding: 15px;
 }
 
-.tabs .tab a{
+nav ul li a.active {
+  text-decoration: underline;
+}
+
+.tabs .tab a {
   color:#000;
 } /*Black color to the text*/
 

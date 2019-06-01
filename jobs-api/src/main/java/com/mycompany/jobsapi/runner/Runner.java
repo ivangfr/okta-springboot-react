@@ -48,7 +48,8 @@ public class Runner implements CommandLineRunner {
             job.setTitle(String.format(TITLE_TEMPLATE, levelName, tech, area));
             job.setCompany(companyName);
             job.setLogoUrl(companyLogoUrl);
-            job.setDescription(String.format(DESCRIPTION_TEMPLATE, companyName, levelName, tech, levelYears, location, moreInfo));
+            job.setDescription(
+                    String.format(DESCRIPTION_TEMPLATE, companyName, levelName, tech, levelYears, location, moreInfo));
             jobService.saveJob(job);
 
             log.info("Job created! => {}", job);
@@ -59,10 +60,10 @@ public class Runner implements CommandLineRunner {
     private final Random random = new Random();
 
     private static final String SPLIT_CHAR = ";";
-    private static final List<String> TECHS = Arrays.asList("Java", "C", "Python");
+    private static final List<String> TECHS = Arrays.asList("Java", "C", "Python", "React", "Angular", "Scala");
     private static final List<String> LEVELS = Arrays.asList("Junior;2", "Mid-career;4", "Senior;6", "Expert;8");
-    private static final List<String> AREAS = Arrays.asList("Finance", "Billing", "Backoffice",
-            "Artificial Intelligence");
+    private static final List<String> AREAS = Arrays.asList("Finance", "Cloud", "Back-office",
+            "Artificial Intelligence", "Mobile");
     private static final List<String> COMPANIES = Arrays.asList(
             "Google;https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
             "Facebook;https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg",

@@ -18,6 +18,7 @@ function App() {
         <div className="App">
           <Navbar />
           <Route path='/' exact component={Home} />
+          <Route path='/login' exact component={Home} />
           <SecureRoute path='/customer' exact component={Customer} />
           <SecureRoute path='/staff' exact component={Staff} />
           <SecureRoute path='/jobs/:job_id' component={JobView} />
