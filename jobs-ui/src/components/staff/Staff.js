@@ -1,11 +1,11 @@
-import { withAuth } from '@okta/okta-react';
-import M from 'materialize-css';
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import API from '../misc/api';
-import Pagination from '../misc/Pagination';
-import Search from '../misc/Search';
-import JobList from './JobList';
+import React, { Component } from 'react'
+import { withAuth } from '@okta/okta-react'
+import { Link } from 'react-router-dom'
+import M from 'materialize-css'
+import API from '../misc/api'
+import Pagination from '../misc/Pagination'
+import Search from '../misc/Search'
+import JobList from './JobList'
 
 class Staff extends Component {
   state = {
@@ -21,8 +21,8 @@ class Staff extends Component {
     searchText: ''
   }
 
-  pageDefaultNumber = 0;
-  pageDefaultSize = 10;
+  pageDefaultNumber = 0
+  pageDefaultSize = 10
 
   componentDidMount() {
     const floatingActionButton = document.querySelectorAll('.fixed-action-btn')
@@ -87,21 +87,19 @@ class Staff extends Component {
   }
 
   deleteJob = async (id) => {
-    if (window.confirm(`Delete job with id ${id}`)) {
-      API.delete(`jobs/${id}`, {
-        headers: {
-          'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
-        }
+    API.delete(`jobs/${id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+      }
+    })
+      .then(() => {
+        const { number, size } = this.state.pagination
+        this.getAllJobs(number, size)
       })
-        .then(() => {
-          const { number, size } = this.state.pagination
-          this.getAllJobs(number, size)
-        })
-        .catch(error => {
-          console.log(error)
-          M.toast({ html: error, classes: 'rounded' })
-        })
-    }
+      .catch(error => {
+        console.log(error)
+        M.toast({ html: error, classes: 'rounded' })
+      })
   }
 
   searchJob = async (searchText, pageNumber, pageSize) => {
@@ -130,7 +128,9 @@ class Staff extends Component {
         </div>
 
         <div className="fixed-action-btn">
-          <Link className="btn-floating modal-trigger btn-large waves-effect waves-light blue" to={'/staff/jobs'} component="JobForm">
+          <Link className="btn-floating modal-trigger btn-large waves-effect waves-light blue"
+            to={'/staff/jobs'}
+            component="JobForm">
             <i className="material-icons">add</i>
           </Link>
         </div>

@@ -36,7 +36,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const linkVisibility = this.state.authenticated ? {"display": "block"} : {"display": "none"}
+    const linkVisibility = this.state.authenticated ? { "display": "block" } : { "display": "none" }
     const username = this.state.authenticated && this.state.user.preferred_username
     const logInOut = this.state.authenticated ? "Logout" : "Login"
     return (
@@ -49,7 +49,7 @@ class Navbar extends Component {
                 <i className="material-icons">menu</i>
               </a>
               <ul id="nav" className="right hide-on-med-and-down">
-                <li className="light-blue darken-3">{username}</li>
+                <li>{username}</li>
                 <li><NavLink exact to="/">Home</NavLink></li>
                 <li><NavLink exact to="/customer" style={linkVisibility}>Customer</NavLink></li>
                 <li><NavLink exact to="/staff" style={linkVisibility}>Staff</NavLink></li>

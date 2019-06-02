@@ -72,7 +72,7 @@ public class SwaggerConfig {
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(any()) // It is wrong! The endpoint /api/jobs/newest is public!
+                .forPaths(regex("/api/jobs.?|.*[^/newest]"))
                 .build();
     }
 

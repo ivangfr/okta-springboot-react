@@ -6,7 +6,6 @@ import com.mycompany.jobsapi.exception.JobNotFoundException;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.repository.JobRepository;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,13 +52,8 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Page<Job> search(String text, Pageable pageable) {
-        QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-                .should(QueryBuilders.matchPhraseQuery("title", text))
-                .should(QueryBuilders.matchPhraseQuery("company", text))
-                .should(QueryBuilders.matchPhraseQuery("description", text));
-
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(queryBuilder)
+                .withQuery(QueryBuilders.queryStringQuery(text))
                 .withPageable(pageable)
                 .build();
 

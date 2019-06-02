@@ -25,8 +25,13 @@ class Search extends Component {
           <div className="col s12">
             <div className="input-field">
               <i className="material-icons prefix">search</i>
-              <input id="searchText" type="text" onChange={this.handleChange} onKeyPress={this.handleEnterPressed} />
-              <label htmlFor="searchText">Search jobs</label>
+              <input
+                id="searchText"
+                type="text"
+                placeholder='Type your search query here and press enter. "java developer" AND (google OR facebook) NOT junior'
+                onChange={this.handleChange}
+                onKeyPress={this.handleEnterPressed}
+              />
             </div>
           </div>
         </div>

@@ -251,13 +251,9 @@ HTTP/1.1 200
 
 > **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
-# TODO
-
-- fix regular expression in swagger for /api/jobs/newest endpoint.
-- implement search for anything in title, company and description of the job.
-
-# Referances
+# References
 
 - https://www.npmjs.com/package/@okta/okta-react
 - https://developer.okta.com/code/react/okta_react_sign-in_widget/
 - https://developer.okta.com/blog/2019/03/06/simple-user-authentication-in-react
+- https://dzone.com/articles/23-useful-elasticsearch-example-queries
