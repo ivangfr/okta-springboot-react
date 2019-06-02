@@ -1,7 +1,6 @@
 package com.mycompany.jobsapi.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
-import static springfox.documentation.builders.PathSelectors.any;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 import java.lang.reflect.Type;
