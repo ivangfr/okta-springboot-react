@@ -1,6 +1,6 @@
 package com.mycompany.jobsapi.model;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -29,10 +29,10 @@ public class Job {
     private String description;
 
     @Field(type = FieldType.Date)
-    private Date createDate;
+    private String createDate;
 
     public Job() {
-        this.createDate = new Date();
+        this.createDate = Instant.ofEpochSecond(Instant.now().getEpochSecond()).toString();
     }
 
 }
