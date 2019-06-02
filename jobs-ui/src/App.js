@@ -28,7 +28,7 @@ function App() {
         </div>
       </Security>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

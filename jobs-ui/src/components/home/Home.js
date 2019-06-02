@@ -20,7 +20,7 @@ class Home extends Component {
         M.toast({ html: error, classes: 'rounded' })
       })
 
-    M.Parallax.init(document.querySelectorAll('.parallax'));
+    M.Parallax.init(document.querySelectorAll('.parallax'))
   }
 
   render() {

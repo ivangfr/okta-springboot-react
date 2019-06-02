@@ -4,7 +4,7 @@ import M from 'materialize-css'
 import JobList from './JobList'
 import Search from '../misc/Search'
 import API from '../misc/api'
-import Pagination from '../misc/Pagination';
+import Pagination from '../misc/Pagination'
 
 class Customer extends Component {
   state = {
@@ -20,8 +20,8 @@ class Customer extends Component {
     searchText: ''
   }
 
-  pageDefaultNumber = 0;
-  pageDefaultSize = 10;
+  pageDefaultNumber = 0
+  pageDefaultSize = 10
 
   async componentDidMount() {
     this.getAllJobs(this.pageDefaultNumber, this.pageDefaultSize)

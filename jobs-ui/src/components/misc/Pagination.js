@@ -19,7 +19,7 @@ class Pagination extends Component {
     if (number < 0 || number >= this.props.pagination.totalPages) {
       return
     }
-    this.props.searchJob(this.props.searchText, number, this.props.pagination.size);
+    this.props.searchJob(this.props.searchText, number, this.props.pagination.size)
   }
 
   render() {
