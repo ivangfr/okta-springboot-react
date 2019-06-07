@@ -22,6 +22,9 @@ management:
     health:
       show-details: always
 
+number-of-fake-jobs: 100
+
 logging:
   level:
     org.springframework.data.elasticsearch.core: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

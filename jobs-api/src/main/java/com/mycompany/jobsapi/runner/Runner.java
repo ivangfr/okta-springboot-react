@@ -7,6 +7,7 @@ import java.util.Random;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.service.JobService;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class Runner implements CommandLineRunner {
 
-    private int numOfJobs = 100;
+    @Value("${number-of-fake-jobs:0}")
+    private int numberOfFakeJobs;
 
     private final JobService jobService;
 
@@ -26,13 +28,18 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("Number of fake jobs to be created: {}", numberOfFakeJobs);
+        if (numberOfFakeJobs <= 0) {
+            return;
+        }
+
         if (!jobService.getNewestJobs(1).isEmpty()) {
             log.info("Database has already data!");
             return;
         }
 
         log.info("Starting creating jobs ...");
-        for (int i = 0; i < numOfJobs; i++) {
+        for (int i = 0; i < numberOfFakeJobs; i++) {
             String tech = TECHS.get(random.nextInt(TECHS.size()));
             String level = LEVELS.get(random.nextInt(LEVELS.size()));
             String levelName = level.split(SPLIT_CHAR)[0];
@@ -54,7 +61,7 @@ public class Runner implements CommandLineRunner {
 
             log.info("Job created! => {}", job);
         }
-        log.info("Created {} jobs successfully!", numOfJobs);
+        log.info("Created {} jobs successfully!", numberOfFakeJobs);
     }
 
     private final Random random = new Random();

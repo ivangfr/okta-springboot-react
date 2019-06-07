@@ -156,8 +156,8 @@ class JobForm extends Component {
         </form>
         <div className="row">
           <div className="input-field col s12">
-            <button className="modal-close waves-effect waves-green btn-flat right" onClick={this.saveJob}>Save</button>
-            <button className="modal-close waves-effect waves-green btn-flat right" onClick={this.redirectJobList}>Cancel</button>
+            <button className="waves-effect waves-green btn-flat right" onClick={this.saveJob}>Save</button>
+            <button className="waves-effect waves-green btn-flat right" onClick={this.redirectJobList}>Cancel</button>
           </div>
         </div>
       </div>

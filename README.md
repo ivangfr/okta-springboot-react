@@ -123,6 +123,17 @@ Enter a password and DO NOT select the checkbox `User must change password on fi
 
 Enter a password and DO NOT select the checkbox `User must change password on first login`
 
+## Start environment
+
+- In a terminal and inside `springboot-react-okta` root folder run
+```bash
+docker-compose up -d
+```
+> To stop and remove containers, networks and volumes
+>```bash
+>docker-compose down -v
+>```
+
 ## Running microservices
 
 ### jobs-api

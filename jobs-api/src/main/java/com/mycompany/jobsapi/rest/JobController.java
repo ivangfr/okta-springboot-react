@@ -59,7 +59,7 @@ public class JobController {
 
     @ApiOperation("Get the newest jobs")
     @GetMapping("/newest")
-    public List<JobDto> getNewestJobs(@RequestParam(required = false) int number) {
+    public List<JobDto> getNewestJobs(@RequestParam(value = "number", required = false, defaultValue = "4") int number) {
         if (number > 10) {
             log.warn("The parameter number cannot be bigger than 10");
             number = 10;
