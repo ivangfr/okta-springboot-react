@@ -2,6 +2,10 @@
 
 The goal of this project is to implement an application where an user can manage (create/read/update/delete) jobs. For it, we will create two microservices: a backend Restful API called `jobs-api` and a frontend user interface called `jobs-ui`. Furthermore, we will use Okta to secure the application.
 
+## Project User Interface Preview
+
+![jobs-portal-preview](images/jobs-portal-preview.gif)
+
 ## Project diagram
 
 ![project-diagram](images/project-diagram.png)
@@ -85,7 +89,7 @@ First of all, you must create a free account at https://developer.okta.com/signu
 | Filter | Matches regex | .*|
 | Include in | Any scope | |
 
-> **Note.** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
+> **Note:** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
 
 ### Creating groups
 
@@ -172,7 +176,7 @@ npm start
 
 - Done!
 
-> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Getting Access Token
 
@@ -248,7 +252,7 @@ HTTP/1.1 200
 {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
 ```
 
-> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Using jobs-api with Swagger
 
@@ -260,7 +264,7 @@ HTTP/1.1 200
 
 - Done! You can now access the sensitive endpoints.
 
-> **Note.** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 # References
 
