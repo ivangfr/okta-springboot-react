@@ -260,7 +260,7 @@ HTTP/1.1 200
 
 - Open `jobs-api` Swagger website, http://localhost:8080/swagger-ui.html
 
-- Click on `Authorize` button. Paste the access token in the `Value` field prefixed by `Bearer`, like `Bearer <access-token>`. Then, click on `Authorize` and, to finalize, click on `Close`.
+- Click on `Authorize` button. Paste the access token in the `Value` field prefixed by `Bearer`, like `Bearer <access-token>`. Then, click on `Authorize` and on `Close` to finalize.
 
 - Done! You can now access the sensitive endpoints.
 
