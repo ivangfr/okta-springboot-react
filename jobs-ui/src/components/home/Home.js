@@ -24,6 +24,8 @@ class Home extends Component {
   }
 
   render() {
+    const { jobs } = this.state
+    
     return (
       <div>
         <div className="parallax-container">
@@ -31,7 +33,7 @@ class Home extends Component {
         </div>
         <div className="section white">
           <div className="container">
-            <JobList jobs={this.state.jobs} />
+            <JobList jobs={jobs} />
           </div>
         </div>
       </div>

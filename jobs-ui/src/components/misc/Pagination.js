@@ -1,18 +1,5 @@
 import React, { Component } from 'react'
 
-// Object
-// content: ...
-// empty: false
-// first: true
-// last: false
-// number: 0
-// numberOfElements: 20
-// pageable: {sort: {…}, offset: 0, pageSize: 20, pageNumber: 0, unpaged: false, …}
-// size: 20
-// sort: {sorted: false, unsorted: true, empty: true}
-// totalElements: 1000
-// totalPages: 50
-
 class Pagination extends Component {
 
   handlePagination = (number) => {

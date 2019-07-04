@@ -30,8 +30,8 @@ class JobView extends Component {
   }
 
   render() {
-    const job = this.state.job
-    const jobInfo = this.state.job && (
+    const { job } = this.state
+    const jobInfo = job && (
       <div className="row" style={{ "marginTop": "30px" }}>
         <div className="col s12">
           <div className="row">

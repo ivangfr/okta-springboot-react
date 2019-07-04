@@ -10,6 +10,7 @@ function Jobs({ jobs }) {
       </Link>
     )
   })
+  
   return (
     <div className="row">
       {jobList}

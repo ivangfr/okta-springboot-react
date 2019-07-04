@@ -81,24 +81,24 @@ class Customer extends Component {
   }
 
   searchJob = async (searchText, pageNumber, pageSize) => {
-    this.setState({
-      searchText
-    })
+    this.setState({ searchText })
     searchText ? this.getJobsWithText(searchText, pageNumber, pageSize) : this.getAllJobs(pageNumber, pageSize)
   }
 
   render() {
+    const { jobs, pagination, searchText } = this.state
+    
     return (
       <div className="container">
         <Search searchJob={this.searchJob} />
 
         <Pagination className="center"
-          pagination={this.state.pagination}
-          searchText={this.state.searchText}
+          pagination={pagination}
+          searchText={searchText}
           searchJob={this.searchJob}
         />
 
-        <JobList jobs={this.state.jobs} />
+        <JobList jobs={jobs} />
       </div>
     )
   }

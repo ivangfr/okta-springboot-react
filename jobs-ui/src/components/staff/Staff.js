@@ -103,9 +103,7 @@ class Staff extends Component {
   }
 
   searchJob = async (searchText, pageNumber, pageSize) => {
-    this.setState({
-      searchText
-    })
+    this.setState({ searchText })
     searchText ? this.getJobsWithText(searchText, pageNumber, pageSize) : this.getAllJobs(pageNumber, pageSize)
   }
 

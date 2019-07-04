@@ -16,9 +16,7 @@ class Jobs extends Component {
   }
 
   showDialog = (job) => {
-    this.setState({
-      job
-    })
+    this.setState({ job })
     this.deleteModal.open()
   }
 
@@ -33,7 +31,7 @@ class Jobs extends Component {
                   <div className="col s3 m2 l2">
                     <Logo logoUrl={job.logoUrl} />
                   </div>
-                  <div className="col s12 m10 l10">
+                  <div className="col s9 m10 l10">
                     <div className="row">
                       <div className="col s12">
                         <span className="right">{job.company}</span>

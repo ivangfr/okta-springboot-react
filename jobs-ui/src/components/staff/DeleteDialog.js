@@ -3,6 +3,7 @@ import React from 'react'
 function DeleteDialog({ job, deleteJob }) {
   const jobId = job && job.id
   const jobCompany = job && job.company
+  
   return (
     <div id="deleteModal" className="modal">
       <div className="modal-content">

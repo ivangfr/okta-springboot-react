@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../misc/Logo'
 import TimesAgo from '../misc/TimesAgo'
 
-export default function JobCard({ job }) {
+function JobCard({ job }) {
   return (
     <div className="col s12 m6 m6">
       <div className="card-panel">
@@ -37,3 +37,5 @@ export default function JobCard({ job }) {
     </div>
   )
 }
+
+export default JobCard

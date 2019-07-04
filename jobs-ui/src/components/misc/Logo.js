@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Logo(props) {
+function Logo({ logoUrl }) {
     const defaultLogoUrl = '/jobs-portal-logo.svg'
     return (
         <div>
-            <img src={props.logoUrl ? props.logoUrl : defaultLogoUrl} alt="" className="responsive-img" />
+            <img src={logoUrl ? logoUrl : defaultLogoUrl} alt="" className="responsive-img" />
         </div>
     )
 }

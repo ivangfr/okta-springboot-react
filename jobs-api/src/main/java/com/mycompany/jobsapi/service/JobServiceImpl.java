@@ -26,7 +26,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> getNewestJobs(int number) {
-        return jobRepository.findAll(PageRequest.of(0, number, Sort.by("createDate").ascending())).getContent();
+        return jobRepository.findAll(PageRequest.of(0, number, Sort.by("createDate").descending())).getContent();
     }
 
     @Override
