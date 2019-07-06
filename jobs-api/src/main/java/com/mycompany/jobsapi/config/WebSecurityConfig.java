@@ -10,7 +10,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/jobs/newest").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/jobs").hasAnyAuthority("JOBS_CUSTOMER", "JOBS_STAFF", "SCOPE_groups")
                 .antMatchers(HttpMethod.GET, "/api/jobs/*").hasAnyAuthority("JOBS_CUSTOMER", "JOBS_STAFF")

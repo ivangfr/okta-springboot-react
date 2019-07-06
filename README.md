@@ -194,7 +194,7 @@ export OKTA_CLIENT_ID=...
 ```
 export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
 client_id=${OKTA_CLIENT_ID}\
-&redirect_uri=https://oidcdebugger.com/debug\
+&redirect_uri=http://localhost:8080/debug\
 &scope=openid\
 &response_type=token\
 &response_mode=form_post\
