@@ -134,10 +134,6 @@ Enter a password and DO NOT select the checkbox `User must change password on fi
 ```
 docker-compose up -d
 ```
-> To stop and remove containers, networks and volumes
->```
->docker-compose down -v
->```
 
 ## Running microservices
 
@@ -264,6 +260,13 @@ HTTP/1.1 200
 - Done! You can now access the sensitive endpoints.
 
 > **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+
+## Shutdown
+
+Run the command below to stop and remove containers, networks and volumes
+```
+docker-compose down -v
+```
 
 ## References
 
