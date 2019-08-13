@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CallbackController {
 
-  @PostMapping("/debug")
+  @PostMapping("/authenticate")
   public Map<String,String> debug(@RequestBody MultiValueMap<String, String> queryMap) {
     return queryMap.toSingleValueMap();
   }

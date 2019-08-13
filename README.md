@@ -42,17 +42,18 @@ First of all, you must create a free account at https://developer.okta.com/signu
 
 - Enter the following values in the form
 
-| Setting | Value |
-| ------- | ----- |
-| App Name | Jobs Portal SPA |
-| Base URIs | http://localhost:3000 |
+| Setting             | Value                                   |
+| ------------------- | --------------------------------------- |
+| App Name            | Jobs Portal SPA                         |
+| Base URIs           | http://localhost:3000                   |
 | Login redirect URIs | http://localhost:3000/implicit/callback |
-| Grant Types Allowed | Implicit |
+|                     | http://localhost:8080/authenticate      |
+| Grant Types Allowed | Implicit                                |
 
 - After the application is created, there are some values that you will need during all project configuration and execution.
 
 | Setting | Where to Find | Example (fake) |
-| ------- | ------------- | ------- |
+| ------- | ------------- | -------------- |
 | Org URL | On the home screen of the developer dashboard, in the upper right. | https://dev-123456.okta.com |
 | Okta Domain| It is the Org URL without `https://` | dev-123456.okta.com |
 | Client ID | In the applications list, or on the `General` tab of a specific application. | 0bcky2d71eXtSsscC123 |
@@ -71,23 +72,23 @@ First of all, you must create a free account at https://developer.okta.com/signu
 
 - Let's add the first claim. So, click on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting | Value | Extra info |
-| ------- | ----- | - |
-| Name | groups | |
-| Include in token type | Access Token | |
-| Value type | Groups | |
-| Filter | Matches regex | .*|
-| Include in | Any scope | |
+| Setting               | Value         | Extra info |
+| --------------------- | ------------- | ---------- |
+| Name                  | groups        |            |
+| Include in token type | Access Token  |            |
+| Value type            | Groups        |            |
+| Filter                | Matches regex | .*         |
+| Include in            | Any scope     |            |
 
 - Now, let's add the second and last claim. For it, click again on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting | Value | Extra info |
-| ------- | ----- | - |
-| Name | groups | |
-| Include in token type | ID Token | |
-| Value type | Groups | |
-| Filter | Matches regex | .*|
-| Include in | Any scope | |
+| Setting               | Value         | Extra info |
+| --------------------- | ------------- | ---------- |
+| Name                  | groups        |            |
+| Include in token type | ID Token      |            |
+| Value type            | Groups        |            |
+| Filter                | Matches regex | .*         |
+| Include in            | Any scope     |            |
 
 > **Note:** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
 
@@ -117,24 +118,24 @@ Enter a password and DO NOT select the checkbox `User must change password on fi
 
 - Let's add the second person. He is a Jobs Portal customer. For it, click on `Add Person` button and enter the following values in the form
 
-| Setting | Value |
-| ------- | ----- |
-| First name | Ivan |
-| Last name | Customer |
-| Username | ivan.customer@jobs.com |
-| Groups | JOBS_CUSTOMER |
-| Password | Set by admin |
+| Setting    | Value                  |
+| ---------- | ---------------------- |
+| First name | Ivan                   |
+| Last name  | Customer               |
+| Username   | ivan.customer@jobs.com |
+| Groups     | JOBS_CUSTOMER          |
+| Password   | Set by admin           |
 
 Enter a password and DO NOT select the checkbox `User must change password on first login`
 
 ## Start environment
 
 - In a terminal and inside `springboot-react-okta` root folder run
-```bash
+```
 docker-compose up -d
 ```
 > To stop and remove containers, networks and volumes
->```bash
+>```
 >docker-compose down -v
 >```
 
@@ -180,9 +181,7 @@ npm start
 
 ## Getting Access Token
 
-In order to use just the `jobs-api` endpoints, you must have an access token. For it, we are going to use an online tool called [`OpenId Connect Debugger`](https://oidcdebugger.com/).
-
-Below are the steps to get it:
+In order to use just the `jobs-api` endpoints, you must have an access token. Below are the steps to get it:
 
 - In a terminal, export the following environment variables. They were obtained while configuring Okta. See **Configuring Okta > Add an OpenID Connect Client** section.
 ```
@@ -194,7 +193,7 @@ export OKTA_CLIENT_ID=...
 ```
 export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
 client_id=${OKTA_CLIENT_ID}\
-&redirect_uri=http://localhost:8080/debug\
+&redirect_uri=http://localhost:8080/authenticate\
 &scope=openid\
 &response_type=token\
 &response_mode=form_post\
