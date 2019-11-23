@@ -25,7 +25,7 @@ class Jobs extends Component {
       return (
         <div className="collection-item" key={job.id}>
           <div className="row">
-            <Link className="black-text" to={'/staff/jobs/' + job.id} component="JobForm">
+            <Link className="black-text" to={'/staff/jobs/' + job.id}>
               <div className="col s11">
                 <div className="row">
                   <div className="col s3 m2 l2">

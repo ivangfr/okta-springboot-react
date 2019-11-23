@@ -127,8 +127,7 @@ class Staff extends Component {
 
         <div className="fixed-action-btn">
           <Link className="btn-floating btn-large waves-effect waves-light blue"
-            to={'/staff/jobs'}
-            component="JobForm">
+            to={'/staff/jobs'}>
             <i className="material-icons">add</i>
           </Link>
         </div>

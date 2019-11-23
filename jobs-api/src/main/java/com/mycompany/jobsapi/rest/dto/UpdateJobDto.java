@@ -9,13 +9,13 @@ public class UpdateJobDto {
     @ApiModelProperty(example = "Senior Software Developer")
     private String title;
 
-    @ApiModelProperty(position = 2, example = "Facebook")
+    @ApiModelProperty(position = 1, example = "Facebook")
     private String company;
 
-    @ApiModelProperty(position = 3, example = "https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg")
+    @ApiModelProperty(position = 2, example = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Facebook_Logo_%282019%29.svg/500px-Facebook_Logo_%282019%29.svg.png")
     private String logoUrl;
 
-    @ApiModelProperty(position = 4, example = "Senior Software Developer with more than 8 years experience")
+    @ApiModelProperty(position = 3, example = "Senior Software Developer with more than 8 years experience")
     private String description;
 
 }

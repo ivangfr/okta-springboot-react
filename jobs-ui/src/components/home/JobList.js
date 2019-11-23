@@ -5,7 +5,7 @@ import JobCard from './JobCard'
 function Jobs({ jobs }) {
   const jobList = jobs.map(job => {
     return (
-      <Link className="black-text" to={'/jobs/' + job.id} component="JobView" key={job.id}>
+      <Link className="black-text" to={'/jobs/' + job.id} key={job.id}>
         <JobCard job={job} />
       </Link>
     )

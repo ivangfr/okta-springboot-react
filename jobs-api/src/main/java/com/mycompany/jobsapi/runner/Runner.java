@@ -72,12 +72,12 @@ public class Runner implements CommandLineRunner {
     private static final List<String> AREAS = Arrays.asList("Finance", "Cloud", "Back-office",
             "Artificial Intelligence", "Mobile");
     private static final List<String> COMPANIES = Arrays.asList(
-            "Google;https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-            "Facebook;https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg",
-            "Yahoo;https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg",
-            "Microsoft;https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+            "Google;https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/500px-Google_2015_logo.svg.png",
+            "Facebook;https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Facebook_Logo_%282019%29.svg/500px-Facebook_Logo_%282019%29.svg.png",
+            "Yahoo;https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Yahoo%21_%282019%29.svg/420px-Yahoo%21_%282019%29.svg.png",
+            "Microsoft;https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/440px-Microsoft_logo_%282012%29.svg.png",
             "Takeaway;https://upload.wikimedia.org/wikipedia/de/1/1d/Takeaway.com_logo.svg",
-            "Oracle;https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg");
+            "Oracle;https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Oracle_Logo.svg/440px-Oracle_Logo.svg.png");
     private static final List<String> LOCATIONS = Arrays.asList("Berlin/Germany", "New York City/US", "Porto/Portugal",
             "Sao Paulo/Brazil");
     private static final String TITLE_TEMPLATE = "%s %s Developer - %s";

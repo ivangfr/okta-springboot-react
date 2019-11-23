@@ -13,14 +13,14 @@ public class CreateJobDto {
     private String title;
 
     @NotBlank
-    @ApiModelProperty(position = 2, example = "Google")
+    @ApiModelProperty(position = 1, example = "Google")
     private String company;
 
-    @ApiModelProperty(position = 3, example = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg")
+    @ApiModelProperty(position = 2, example = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/500px-Google_2015_logo.svg.png")
     private String logoUrl;
 
     @NotBlank
-    @ApiModelProperty(position = 4, example = "Software Developer with more than 5 years experience")
+    @ApiModelProperty(position = 3, example = "Software Developer with more than 5 years experience")
     private String description;
 
 }
