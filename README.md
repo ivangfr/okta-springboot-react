@@ -42,21 +42,21 @@ First of all, you must create a free account at https://developer.okta.com/signu
 
 - Enter the following values in the form
 
-| Setting             | Value                                   |
-| ------------------- | --------------------------------------- |
-| App Name            | Jobs Portal SPA                         |
-| Base URIs           | http://localhost:3000                   |
-| Login redirect URIs | http://localhost:3000/implicit/callback |
-|                     | http://localhost:8080/authenticate      |
-| Grant Types Allowed | Implicit                                |
+  | Setting             | Value                                   |
+  | ------------------- | --------------------------------------- |
+  | App Name            | Jobs Portal SPA                         |
+  | Base URIs           | http://localhost:3000                   |
+  | Login redirect URIs | http://localhost:3000/implicit/callback |
+  |                     | http://localhost:8080/authenticate      |
+  | Grant Types Allowed | Implicit                                |
 
 - After the application is created, there are some values that you will need during all project configuration and execution.
 
-| Setting     | Example (fake)              | Where to Find                                                      |
-| ----------- | --------------------------- | ------------------------------------------------------------------ |
-| Org URL     | https://dev-123456.okta.com | On the home screen of the developer dashboard, in the upper right  |
-| Okta Domain | dev-123456.okta.com         | It is the Org URL without `https://`                               |
-| Client ID   | 0bcky2d71eXtSsscC123        | In the applications list or on the `General` tab of a specific app |
+  | Setting     | Example (fake)              | Where to Find                                                      |
+  | ----------- | --------------------------- | ------------------------------------------------------------------ |
+  | Org URL     | https://dev-123456.okta.com | On the home screen of the developer dashboard, in the upper right  |
+  | Okta Domain | dev-123456.okta.com         | It is the Org URL without `https://`                               |
+  | Client ID   | 0bcky2d71eXtSsscC123        | In the applications list or on the `General` tab of a specific app |
 
 ### Enabling groups
 
@@ -72,25 +72,25 @@ First of all, you must create a free account at https://developer.okta.com/signu
 
 - Let's add the first claim. So, click on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting               | Value         | Extra info |
-| --------------------- | ------------- | ---------- |
-| Name                  | groups        |            |
-| Include in token type | Access Token  |            |
-| Value type            | Groups        |            |
-| Filter                | Matches regex | .*         |
-| Include in            | Any scope     |            |
+  | Setting               | Value         | Extra info |
+  | --------------------- | ------------- | ---------- |
+  | Name                  | groups        |            |
+  | Include in token type | Access Token  |            |
+  | Value type            | Groups        |            |
+  | Filter                | Matches regex | .*         |
+  | Include in            | Any scope     |            |
 
 - Now, let's add the second and last claim. For it, click again on `Add Claim` button and add the settings displayed on the table below. After that, click on `Save` button.
 
-| Setting               | Value         | Extra info |
-| --------------------- | ------------- | ---------- |
-| Name                  | groups        |            |
-| Include in token type | ID Token      |            |
-| Value type            | Groups        |            |
-| Filter                | Matches regex | .*         |
-| Include in            | Any scope     |            |
+  | Setting               | Value         | Extra info |
+  | --------------------- | ------------- | ---------- |
+  | Name                  | groups        |            |
+  | Include in token type | ID Token      |            |
+  | Value type            | Groups        |            |
+  | Filter                | Matches regex | .*         |
+  | Include in            | Any scope     |            |
 
-> Note. The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
+> **Note:** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
 
 ### Creating groups
 
@@ -106,25 +106,25 @@ First of all, you must create a free account at https://developer.okta.com/signu
 
 - Let's add the first person. He is a Jobs Portal staff member. So, click on `Add Person` button and enter the following values in the form
 
-| Setting    | Value               |
-| ---------- | ------------------- |
-| First name | Ivan                |
-| Last name  | Staff               |
-| Username   | ivan.staff@jobs.com |
-| Groups     | JOBS_STAFF          |
-| Password   | Set by admin        |
+  | Setting    | Value               |
+  | ---------- | ------------------- |
+  | First name | Ivan                |
+  | Last name  | Staff               |
+  | Username   | ivan.staff@jobs.com |
+  | Groups     | JOBS_STAFF          |
+  | Password   | Set by admin        |
 
 Enter a password and DO NOT select the checkbox `User must change password on first login`
 
 - Let's add the second person. He is a Jobs Portal customer. For it, click on `Add Person` button and enter the following values in the form
 
-| Setting    | Value                  |
-| ---------- | ---------------------- |
-| First name | Ivan                   |
-| Last name  | Customer               |
-| Username   | ivan.customer@jobs.com |
-| Groups     | JOBS_CUSTOMER          |
-| Password   | Set by admin           |
+  | Setting    | Value                  |
+  | ---------- | ---------------------- |
+  | First name | Ivan                   |
+  | Last name  | Customer               |
+  | Username   | ivan.customer@jobs.com |
+  | Groups     | JOBS_CUSTOMER          |
+  | Password   | Set by admin           |
 
 Enter a password and DO NOT select the checkbox `User must change password on first login`
 
@@ -172,7 +172,7 @@ npm start
 
 It will open `job-ui` in a browser automatically.
 
-## Applications URLS
+## Applications URLs
 
 | Application | URL                                   |
 | ----------- | ------------------------------------- |
@@ -189,31 +189,31 @@ It will open `job-ui` in a browser automatically.
 
 - Done!
 
-> Note. If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Getting Access Token
 
 In order to use just the `jobs-api` endpoints, you must have an access token. Below are the steps to get it.
 
 - In a terminal, export the following environment variables. They were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
-```
-export OKTA_DOMAIN=...
-export OKTA_CLIENT_ID=...
-```
+  ```
+  export OKTA_DOMAIN=...
+  export OKTA_CLIENT_ID=...
+  ```
 
 - Get Okta Access Token Url
-```
-export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
-client_id=${OKTA_CLIENT_ID}\
-&redirect_uri=http://localhost:8080/authenticate\
-&scope=openid\
-&response_type=token\
-&response_mode=form_post\
-&state=state\
-&nonce=6jtp65rt9jf"
+  ```
+  export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
+  client_id=${OKTA_CLIENT_ID}\
+  &redirect_uri=http://localhost:8080/authenticate\
+  &scope=openid\
+  &response_type=token\
+  &response_mode=form_post\
+  &state=state\
+  &nonce=6jtp65rt9jf"
 
-echo $OKTA_ACCESS_TOKEN_URL
-```
+  echo $OKTA_ACCESS_TOKEN_URL
+  ```
 
 - Copy the Okta Access Token Url from the previous step and past it in a browser
 
@@ -263,7 +263,7 @@ HTTP/1.1 200
 {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
 ```
 
-> Note. If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Using jobs-api with Swagger
 
@@ -275,7 +275,7 @@ HTTP/1.1 200
 
 - Done! You can now access the sensitive endpoints.
 
-> Note. If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Shutdown
 
