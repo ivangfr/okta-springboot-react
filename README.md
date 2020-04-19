@@ -21,6 +21,7 @@ The goal of this project is to implement an application where a user can manage 
   | Endpoint                | Secured | Role                        |
   | ----------------------- | ------- | --------------------------- |
   | `GET /actuator/*`       |      No |                             |
+  | `POST /authenticate`    |      No |                             |
   | `GET /api/jobs/newest`  |      No |                             |
   | `POST /api/jobs`        |     Yes | `JOBS_STAFF`                |
   | `PUT /api/jobs/{id}`    |     Yes | `JOBS_STAFF`                |

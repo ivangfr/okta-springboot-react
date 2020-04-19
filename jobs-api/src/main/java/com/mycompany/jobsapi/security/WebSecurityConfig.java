@@ -12,13 +12,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/jobs/newest").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/jobs", "/api/jobs/**").hasAnyAuthority(JOBS_CUSTOMER, JOBS_STAFF)
                 .antMatchers(HttpMethod.PUT, "/api/jobs/search").hasAnyAuthority(JOBS_CUSTOMER, JOBS_STAFF)
                 .antMatchers("/api/jobs", "/api/jobs/**").hasAuthority(JOBS_STAFF)
                 .antMatchers("/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
                 .anyRequest().authenticated()
-                .and().oauth2ResourceServer().jwt();
+                .and()
+                .oauth2ResourceServer().jwt();
         http.csrf().disable();
     }
 
