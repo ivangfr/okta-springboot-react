@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withAuth } from '@okta/okta-react'
+import { withOktaAuth } from '@okta/okta-react'
 import { Link } from 'react-router-dom'
 import M from 'materialize-css'
 import API from '../misc/api'
@@ -36,7 +36,7 @@ class Staff extends Component {
   getAllJobs = async (page, size) => {
     API.get(`jobs?page=${page}&size=${size}`, {
       headers: {
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken
       }
     })
       .then(response => {
@@ -63,7 +63,7 @@ class Staff extends Component {
     API.put(`jobs/search?page=${page}&size=${size}`, { 'text': text }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken
       }
     })
       .then(response => {
@@ -89,7 +89,7 @@ class Staff extends Component {
   deleteJob = async (id) => {
     API.delete(`jobs/${id}`, {
       headers: {
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken
       }
     })
       .then(() => {
@@ -136,4 +136,4 @@ class Staff extends Component {
   }
 }
 
-export default withAuth(Staff)
+export default withOktaAuth(Staff)

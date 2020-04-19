@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class Runner implements CommandLineRunner {
+public class DatabaseInitializer implements CommandLineRunner {
 
     @Value("${number-of-fake-jobs:0}")
     private int numberOfFakeJobs;
 
     private final JobService jobService;
 
-    public Runner(JobService jobService) {
+    public DatabaseInitializer(JobService jobService) {
         this.jobService = jobService;
     }
 

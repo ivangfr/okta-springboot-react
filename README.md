@@ -1,6 +1,6 @@
-# `springboot-react-okta`
+# springboot-react-okta
 
-The goal of this project is to implement an application where a user can manage (create/read/update/delete) jobs. For it, we will create: a backend Restful API called `jobs-api` and a frontend user interface called `jobs-ui`. Furthermore, we will use [`Okta`](https://www.okta.com/) to secure the complete application.
+The goal of this project is to implement an application where a user can manage (create/read/update/delete) jobs. For it, we will create: a backend Restful API called `jobs-api` and a frontend application called `jobs-ui`. Furthermore, we will use [`Okta`](https://www.okta.com/) to secure the complete application.
 
 ## Project User Interface Preview
 
@@ -12,23 +12,25 @@ The goal of this project is to implement an application where a user can manage 
 
 ## Applications
 
-### jobs-api
+- **jobs-api**
 
-[`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Web Java application that exposes a REST API for managing jobs. It has some endpoints that are secured. `jobs-api` uses `Okta` to handle authentication and authorization. The table below shows the authorization role required to access the sensitive endpoints.
+  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Web Java application that exposes a REST API for managing jobs. It has some endpoints that are secured.  `jobs-api` uses `Okta` to handle authentication and authorization.
+  
+  The table below shows the endpoins, each one are secured or not and the authorization role required to access the secured ones.
+ 
+  | Endpoint                | Secured | Role                        |
+  | ----------------------- | ------- | --------------------------- |
+  | `GET /actuator/*`       |      No |                             |
+  | `GET /api/jobs/newest`  |      No |                             |
+  | `POST /api/jobs`        |     Yes | `JOBS_STAFF`                |
+  | `PUT /api/jobs/{id}`    |     Yes | `JOBS_STAFF`                |
+  | `DELETE /api/jobs/{id}` |     Yes | `JOBS_STAFF`                |
+  | `GET /api/jobs/{id}`    |     Yes | `JOBS_STAFF, JOBS_CUSTOMER` |
+  | `PUT /api/jobs/search`  |     Yes | `JOBS_STAFF, JOBS_CUSTOMER` |
 
-| Endpoint                | Role                        |
-| ----------------------- | --------------------------- |
-| `GET /actuator/*`       |                             |
-| `GET /api/jobs/newest`  |                             |
-| `POST /api/jobs`        | `JOBS_STAFF`                |
-| `PUT /api/jobs/{id}`    | `JOBS_STAFF`                |
-| `DELETE /api/jobs/{id}` | `JOBS_STAFF`                |
-| `GET /api/jobs/{id}`    | `JOBS_STAFF, JOBS_CUSTOMER` |
-| `PUT /api/jobs/search`  | `JOBS_STAFF, JOBS_CUSTOMER` |
+- **jobs-ui**
 
-### jobs-ui
-
-[`ReactJS`](https://reactjs.org/) frontend application where customers can look for a job and staff members can handle jobs. In order to access it, a person must login. The authentication is handled by `Okta`.
+  [`ReactJS`](https://reactjs.org/) frontend application where customers can look for a job and staff members can handle jobs. In order to access it, a person must login. The authentication is handled by `Okta`.
 
 ## Configuring Okta
 
@@ -90,7 +92,7 @@ First of all, you must create a free account at https://developer.okta.com/signu
   | Filter                | Matches regex | .*         |
   | Include in            | Any scope     |            |
 
-> **Note:** The only difference from the first claim is in the "Include in token type". The second has `ID Token` and the former `Access Token`.
+> **Note:** The only difference from the first claim is in the `Include in token type`. The second has `ID Token` and the former `Access Token`.
 
 ### Creating groups
 
@@ -130,47 +132,50 @@ Enter a password and DO NOT select the checkbox `User must change password on fi
 
 ## Start environment
 
-In a terminal and inside `springboot-react-okta` root folder run
-```
-docker-compose up -d
-```
+- Open a terminal
+
+- Inside `springboot-react-okta` root folder run
+  ```
+  docker-compose up -d
+  ```
 
 ## Running applications
 
-### jobs-api
+- **jobs-api**
 
-In a terminal, export the following environment variables. Those values were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
-```
-export OKTA_DOMAIN=...
-export OKTA_CLIENT_ID=...
-```
+  - In a terminal, inside `springboot-react-okta/jobs-api` folder
+  
+  - Export the following environment variables. Those values were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
+    ```
+    export OKTA_DOMAIN=...
+    export OKTA_CLIENT_ID=...
+    ```
 
-Then, inside `springboot-react-okta/jobs-api` folder, run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`
-```
-./mvnw clean spring-boot:run
-```
+  - Then, run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`
+    ```
+    ./mvnw clean spring-boot:run
+    ```
 
-### jobs-ui
+- **jobs-ui**
 
-Open a new terminal, go to `springboot-react-okta/jobs-ui` folder.
+  - Open a new terminal and navigate to `springboot-react-okta/jobs-ui` folder
 
-Create a file called `.env.local` with the following content. Those values were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
-```
-REACT_APP_OKTA_ORG_URL=...
-REACT_APP_OKTA_CLIENT_ID=...
-```
+  - Create a file called `.env.local` with the following content. Those values were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
+    ```
+    REACT_APP_OKTA_ORG_URL=...
+    REACT_APP_OKTA_CLIENT_ID=...
+    ```
 
-Execute the command below if you are running `jobs-ui` for the first time
-```
-npm install
-```
+  - If you are running `jobs-ui` for the first time, execute the [`npm`](https://www.npmjs.com/) command below
+    ```
+    npm install
+    ```
 
-To start `jobs-api`, run the following [`npm`](https://www.npmjs.com/)
-```
-npm start
-```
-
-It will open `job-ui` in a browser automatically.
+  - To start `jobs-api` run
+    ```
+    npm start
+    ```
+    It will open `job-ui` in a browser automatically.
 
 ## Applications URLs
 
@@ -181,7 +186,7 @@ It will open `job-ui` in a browser automatically.
 
 ## Using jobs-ui
 
-- Open a browser and access the url: http://localhost:3000
+- Open a browser and access http://localhost:3000
 
 - Click on `Login` in the navigation bar
 
@@ -195,10 +200,10 @@ It will open `job-ui` in a browser automatically.
 
 In order to use just the `jobs-api` endpoints, you must have an access token. Below are the steps to get it.
 
-- In a terminal, export the following environment variables. They were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
+- In a terminal, create the following environment variables. Their values were obtained while configuring Okta. See [`Configuring Okta > Add an OpenID Connect Client`](https://github.com/ivangfr/springboot-react-okta#add-an-openid-connect-client) section.
   ```
-  export OKTA_DOMAIN=...
-  export OKTA_CLIENT_ID=...
+  OKTA_DOMAIN=...
+  OKTA_CLIENT_ID=...
   ```
 
 - Get Okta Access Token Url
@@ -223,47 +228,47 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 ## Calling jobs-api endpoints using curl
 
-### GET api/jobs/newest
+- **`GET api/jobs/newest`**
 
-The `api/jobs/newest` endpoint is public, so we can access it without any problem.
-```
-curl -i http://localhost:8080/api/jobs/newest?number=2
-```
-Response
-```
-HTTP/1.1 200
-[{"id":"uuulE2sBTYouQKNL1uoV", ...},{"id":"u-ulE2sBTYouQKNL1-qb", ...}]
-```
+  The `api/jobs/newest` endpoint is public, so we can access it without any problem.
+  ```
+  curl -i http://localhost:8080/api/jobs/newest?number=2
+  ```
+  It should return
+  ```
+  HTTP/1.1 200
+  [{"id":"uuulE2sBTYouQKNL1uoV", ...},{"id":"u-ulE2sBTYouQKNL1-qb", ...}]
+  ```
 
-### GET api/jobs without Access Token
+- **`GET api/jobs` without Access Token**
 
-Try to get the list of jobs without informing the access token.
-```
-curl -i http://localhost:8080/api/jobs
-```
-Response
-```
-HTTP/1.1 401
-```
+  Try to get the list of jobs without informing the access token.
+  ```
+  curl -i http://localhost:8080/api/jobs
+  ```
+  It should return
+  ```
+  HTTP/1.1 401
+  ```
 
-### GET api/jobs with Access Token
+- **`GET api/jobs` with Access Token**
 
-First, get the access token as explained in [`Getting Access Token`](https://github.com/ivangfr/springboot-react-okta#getting-access-token) section. Then, export the access token to an environment variable.
-```
-export ACCESS_TOKEN=...
-```
+  First, get the access token as explained in [`Getting Access Token`](https://github.com/ivangfr/springboot-react-okta#getting-access-token) section. Then, create an environment variable for the access token.
+  ```
+  ACCESS_TOKEN=...
+  ```
+  
+  Call the get the list of jobs informing the access token
+  ```
+  curl -i http://localhost:8080/api/jobs -H "Authorization: Bearer $ACCESS_TOKEN"
+  ```
+  Response
+  ```
+  HTTP/1.1 200
+  {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
+  ```
 
-Call the get the list of jobs informing the access token
-```
-curl -i http://localhost:8080/api/jobs -H "Authorization: Bearer $ACCESS_TOKEN"
-```
-Response
-```
-HTTP/1.1 200
-{"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
-```
-
-> **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+  > **Note:** If you are using the person `ivan.customer@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Using jobs-api with Swagger
 
@@ -279,21 +284,23 @@ HTTP/1.1 200
 
 ## Shutdown
 
-Go to `jobs-api` and `jobs-ui` terminals and press `ctrl-c`
+- Go to `jobs-api` and `jobs-ui` terminals and press `Ctrl+C`
 
-Then, to stop and remove containers, networks and volumes
-```
-docker-compose down -v
-```
+- To stop and remove containers, networks and volumes, run in a terminal the following command inside `springboot-react-okta` root folder
+  ```
+  docker-compose down -v
+  ```
 
 ## How to upgrade jobs-ui dependencies to latest version
 
-In a terminal and inside `springboot-react-okta/movies-ui` folder, run the following commands
-```
-npm i -g npm-check-updates
-ncu -u
-npm install
-```
+- In a terminal, make sure you are in `springboot-react-okta/movies-ui` folder
+
+- Run the following commands
+  ```
+  npm i -g npm-check-updates
+  ncu -u
+  npm install
+  ```
 
 ## References
 
@@ -301,3 +308,7 @@ npm install
 - https://developer.okta.com/code/react/okta_react_sign-in_widget/
 - https://developer.okta.com/blog/2019/03/06/simple-user-authentication-in-react
 - https://dzone.com/articles/23-useful-elasticsearch-example-queries
+
+## Issues
+
+  - Not able to get the job id in the path `/jobs/{id}`. Maybe, it's related to https://github.com/okta/okta-oidc-js/issues/724 and https://github.com/okta/okta-oidc-js/issues/743

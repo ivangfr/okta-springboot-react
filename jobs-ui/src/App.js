@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react'
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react'
 import Navbar from './components/misc/Navbar'
 import Home from './components/home/Home'
 import Customer from './components/customer/Customer'
@@ -24,7 +24,7 @@ function App() {
           <SecureRoute path='/jobs/:job_id' component={JobView} />
           <SecureRoute path='/staff/jobs' exact component={JobForm} />
           <SecureRoute path='/staff/jobs/:job_id' component={JobForm} />
-          <Route path='/implicit/callback' component={ImplicitCallback} />
+          <Route path='/implicit/callback' component={LoginCallback} />
         </div>
       </Security>
     </Router>

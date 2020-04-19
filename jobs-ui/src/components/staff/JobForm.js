@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withAuth } from '@okta/okta-react'
+import { withOktaAuth } from '@okta/okta-react'
 import M from 'materialize-css'
 import JobCardHome from '../home/JobCard'
 import JobCardCustomer from '../customer/JobCard'
@@ -31,7 +31,7 @@ class JobForm extends Component {
     if (id) {
       API.get(`jobs/${id}`, {
         headers: {
-          'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+          'Authorization': 'Bearer ' + await this.props.authState.accessToken
         }
       })
         .then(response => {
@@ -72,7 +72,7 @@ class JobForm extends Component {
       url: url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken
       },
       data: JSON.stringify(job)
     })
@@ -188,4 +188,4 @@ class JobForm extends Component {
   }
 }
 
-export default withAuth(JobForm)
+export default withOktaAuth(JobForm)

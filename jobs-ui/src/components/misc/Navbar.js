@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { withAuth } from '@okta/okta-react'
+import { withOktaAuth } from '@okta/okta-react'
 import M from 'materialize-css'
 
 class Navbar extends Component {
@@ -21,15 +21,15 @@ class Navbar extends Component {
   }
 
   checkAuthentication = async () => {
-    const authenticated = await this.props.auth.isAuthenticated()
+    const authenticated = await this.props.authState.isAuthenticated
     if (authenticated !== this.state.authenticated) {
-      const user = await this.props.auth.getUser()
+      const user = await this.props.authService.getUser()
       this.setState({ authenticated, user })
     }
   }
 
   logHandleLogInOut = async () => {
-    this.state.authenticated ? this.props.auth.logout('/') : this.props.auth.login('/')
+    this.state.authenticated ? this.props.authService.logout('/') : this.props.authService.login('/')
   }
 
   render() {
@@ -67,4 +67,4 @@ class Navbar extends Component {
   }
 }
 
-export default withAuth(Navbar)
+export default withOktaAuth(Navbar)

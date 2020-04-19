@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withAuth } from '@okta/okta-react'
+import { withOktaAuth } from '@okta/okta-react'
 import M from 'materialize-css'
 import Logo from '../misc/Logo'
 import TimesAgo from '../misc/TimesAgo'
@@ -15,7 +15,7 @@ class JobView extends Component {
 
     API.get(`jobs/${id}`, {
       headers: {
-        'Authorization': 'Bearer ' + await this.props.auth.getAccessToken()
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken
       }
     })
       .then(response => {
@@ -69,4 +69,4 @@ class JobView extends Component {
   }
 }
 
-export default withAuth(JobView)
+export default withOktaAuth(JobView)

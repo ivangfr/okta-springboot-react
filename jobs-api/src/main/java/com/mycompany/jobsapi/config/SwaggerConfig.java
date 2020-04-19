@@ -97,7 +97,7 @@ public class SwaggerConfig {
 
             @Override
             public List<AlternateTypeRule> rules() {
-                return Arrays.asList(newRule(resolver.resolve(Pageable.class), resolver.resolve(pageableMixin())));
+                return Collections.singletonList(newRule(resolver.resolve(Pageable.class), resolver.resolve(pageableMixin())));
             }
         };
     }
