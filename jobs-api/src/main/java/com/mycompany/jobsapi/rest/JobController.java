@@ -1,18 +1,17 @@
 package com.mycompany.jobsapi.rest;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
+import com.mycompany.jobsapi.mapper.JobMapper;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.rest.dto.CreateJobDto;
 import com.mycompany.jobsapi.rest.dto.JobDto;
 import com.mycompany.jobsapi.rest.dto.SearchDto;
 import com.mycompany.jobsapi.rest.dto.UpdateJobDto;
 import com.mycompany.jobsapi.service.JobService;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -29,35 +28,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.mycompany.jobsapi.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
 
     private final JobService jobService;
-    private final MapperFacade mapperFacade;
+    private final JobMapper jobMapper;
 
-    public JobController(JobService jobService, MapperFacade mapperFacade) {
-        this.jobService = jobService;
-        this.mapperFacade = mapperFacade;
-    }
-
-    @ApiOperation(
-            value = "Get all jobs with pagination",
-            notes = "To sort the results by a specified field (ex. 'createDate'), use in 'sort' field a string like: createDate,[asc|desc]")
+    @Operation(
+            summary = "Get jobs with pagination",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping
-    public Page<JobDto> getAllJobs(
-            @PageableDefault(size=10, page=0, sort={"createDate"}, direction=Direction.DESC) Pageable pageable,
+    public Page<JobDto> getJobs(
+            @ParameterObject @PageableDefault(size = 10, page = 0, sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
             Principal principal) {
         log.info("Request to get a page of jobs (offset = {}, pageSize = {}) made by {}", pageable.getOffset(), pageable.getPageSize(), principal.getName());
-        return jobService.getAllJobsByPage(pageable).map(job -> mapperFacade.map(job, JobDto.class));
+        return jobService.getJobsByPage(pageable).map(jobMapper::toJobDto);
     }
 
-    @ApiOperation("Get the newest jobs")
+    @Operation(summary = "Get the newest jobs")
     @GetMapping("/newest")
     public List<JobDto> getNewestJobs(@RequestParam(value = "number", required = false, defaultValue = "4") int number) {
         if (number > 10) {
@@ -66,54 +64,62 @@ public class JobController {
         }
         return jobService.getNewestJobs(number)
                 .stream()
-                .map(job -> mapperFacade.map(job, JobDto.class))
+                .map(jobMapper::toJobDto)
                 .collect(Collectors.toList());
     }
 
-    @ApiOperation("Get a job by id")
+    @Operation(
+            summary = "Get a job by id",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/{id}")
     public JobDto getJobById(@PathVariable String id, Principal principal) {
         log.info("Request to get a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
-        return mapperFacade.map(job, JobDto.class);
+        return jobMapper.toJobDto(job);
     }
 
-    @ApiOperation("Create a job")
+    @Operation(
+            summary = "Create a job",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public JobDto createJob(@Valid @RequestBody CreateJobDto createJobDto, Principal principal) {
         log.info("Request to create a job made by {}", principal.getName());
-        Job job = mapperFacade.map(createJobDto, Job.class);
+        Job job = jobMapper.toJob(createJobDto);
         job = jobService.saveJob(job);
-        return mapperFacade.map(job, JobDto.class);
+        return jobMapper.toJobDto(job);
     }
 
-    @ApiOperation("Delete a job")
+    @Operation(
+            summary = "Delete a job",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @DeleteMapping("/{id}")
     public JobDto deleteJob(@PathVariable String id, Principal principal) {
         log.info("Request to delete a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         jobService.deleteJob(job);
-        return mapperFacade.map(job, JobDto.class);
+        return jobMapper.toJobDto(job);
     }
 
-    @ApiOperation("Update a job")
+    @Operation(
+            summary = "Update a job",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/{id}")
     public JobDto updateJob(@PathVariable String id, @Valid @RequestBody UpdateJobDto updateJobDto, Principal principal) {
         log.info("Request to update a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
-        mapperFacade.map(updateJobDto, job);
+        jobMapper.updateJobFromDto(updateJobDto, job);
         jobService.saveJob(job);
-        return mapperFacade.map(job, JobDto.class);
+        return jobMapper.toJobDto(job);
     }
 
-    @ApiOperation(
-            value = "Search jobs",
-            notes = "This endpoint does a query for the 'string' informed in the Job fields: 'title', 'company' and 'description'\n" +
-                    "To sort the results by a specified field (ex. 'createDate'), use in 'sort' field a string like: createDate,[asc|desc]")
+    @Operation(
+            summary = "Search for jobs",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/search")
-    public Page<Job> searchNews(@Valid @RequestBody SearchDto searchDto, Principal principal,
-        @PageableDefault(size=10, page=0, sort={"createDate"}, direction=Direction.DESC) Pageable pageable) {
+    public Page<Job> searchJobs(@Valid @RequestBody SearchDto searchDto,
+                                @ParameterObject @PageableDefault(size = 10, page = 0, sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
+                                Principal principal) {
         log.info("Request to search a job with text {} made by {}", searchDto.getText(), principal.getName());
         return jobService.search(searchDto.getText(), pageable);
     }

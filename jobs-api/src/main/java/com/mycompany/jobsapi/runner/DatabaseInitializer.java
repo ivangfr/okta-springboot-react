@@ -1,30 +1,27 @@
 package com.mycompany.jobsapi.runner;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.service.JobService;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
 
-    @Value("${number-of-fake-jobs:0}")
-    private int numberOfFakeJobs;
-
     private final JobService jobService;
 
-    public DatabaseInitializer(JobService jobService) {
-        this.jobService = jobService;
-    }
+    @Value("${number-of-fake-jobs:0}")
+    private int numberOfFakeJobs;
 
     @Override
     public void run(String... args) throws Exception {
@@ -64,7 +61,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         log.info("Created {} jobs successfully!", numberOfFakeJobs);
     }
 
-    private final Random random = new Random();
+    private static final Random random = new SecureRandom();
 
     private static final String SPLIT_CHAR = ";";
     private static final List<String> TECHS = Arrays.asList("Java", "C", "Python", "React", "Angular", "Scala");

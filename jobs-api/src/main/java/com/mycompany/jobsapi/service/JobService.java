@@ -1,17 +1,16 @@
 package com.mycompany.jobsapi.service;
 
-import java.util.List;
-
 import com.mycompany.jobsapi.model.Job;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface JobService {
 
     List<Job> getNewestJobs(int number);
 
-    Page<Job> getAllJobsByPage(Pageable pageable);
+    Page<Job> getJobsByPage(Pageable pageable);
 
     Job validateAndGetJobById(String id);
 

@@ -6,23 +6,19 @@ import com.mycompany.jobsapi.exception.JobNotFoundException;
 import com.mycompany.jobsapi.model.Job;
 import com.mycompany.jobsapi.repository.JobRepository;
 
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
-
-    public JobServiceImpl(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
-    }
 
     @Override
     public List<Job> getNewestJobs(int number) {
@@ -30,7 +26,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Page<Job> getAllJobsByPage(Pageable pageable) {
+    public Page<Job> getJobsByPage(Pageable pageable) {
         return jobRepository.findAll(pageable);
     }
 
@@ -52,12 +48,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Page<Job> search(String text, Pageable pageable) {
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.queryStringQuery(text))
-                .withPageable(pageable)
-                .build();
-
-        return jobRepository.search(searchQuery);
+        return jobRepository.findJobsUsingQueryStringQuery(text, pageable);
     }
 
 }
