@@ -32,8 +32,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job validateAndGetJobById(String id) {
-        return jobRepository.findById(id)
-                .orElseThrow(() -> new JobNotFoundException(String.format("Job with id %s not found", id)));
+        return jobRepository.findById(id).orElseThrow(() -> new JobNotFoundException(id));
     }
 
     @Override

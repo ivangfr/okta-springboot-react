@@ -8,7 +8,7 @@ public class JobNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public JobNotFoundException(String message) {
-        super(message);
+    public JobNotFoundException(String id) {
+        super(String.format("Job with id %s not found", id));
     }
 }
