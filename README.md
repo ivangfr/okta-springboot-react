@@ -33,6 +33,14 @@ The goal of this project is to implement an application where a user can manage 
 
   [`ReactJS`](https://reactjs.org/) frontend application where customers can look for a job and staff members can handle jobs. In order to access it, a person must login. The authentication is handled by `Okta`.
 
+## Prerequisites
+
+- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [`npm`](https://www.npmjs.com/get-npm)
+- [`Docker`](https://www.docker.com/)
+- [`Docker-Compose`](https://docs.docker.com/compose/install/)
+- [`Okta` account](https://developer.okta.com/signup/)
+
 ## Configuring Okta
 
 First of all, you must create a free account at https://developer.okta.com/signup/. Once you have it, log in and let's start the configuration.
@@ -131,12 +139,6 @@ Enter a password and DO NOT select the checkbox `User must change password on fi
   | Password   | Set by admin           |
 
 Enter a password and DO NOT select the checkbox `User must change password on first login`
-
-## Prerequisites
-
-- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-- [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
 ## Start environment
 
