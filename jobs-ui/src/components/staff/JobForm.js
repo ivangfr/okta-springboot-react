@@ -31,7 +31,7 @@ class JobForm extends Component {
     if (id) {
       API.get(`jobs/${id}`, {
         headers: {
-          'Authorization': 'Bearer ' + await this.props.authState.accessToken
+          'Authorization': 'Bearer ' + await this.props.authState.accessToken.value
         }
       })
         .then(response => {
@@ -72,7 +72,7 @@ class JobForm extends Component {
       url: url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + await this.props.authState.accessToken
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken.value
       },
       data: JSON.stringify(job)
     })

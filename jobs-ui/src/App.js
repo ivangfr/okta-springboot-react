@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { OktaAuth } from '@okta/okta-auth-js'
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react'
 import Navbar from './components/misc/Navbar'
 import Home from './components/home/Home'
@@ -9,12 +10,14 @@ import Staff from './components/staff/Staff'
 import JobForm from './components/staff/JobForm'
 
 function App() {
+  const oktaAuth = new OktaAuth({
+    issuer: `${process.env.REACT_APP_OKTA_ORG_URL}/oauth2/default`,
+    clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+    redirectUri: `${window.location.origin}/implicit/callback`
+  })
   return (
     <Router>
-      <Security
-        issuer={`${process.env.REACT_APP_OKTA_ORG_URL}/oauth2/default`}
-        client_id={process.env.REACT_APP_OKTA_CLIENT_ID}
-        redirect_uri={window.location.origin + '/implicit/callback'} >
+      <Security oktaAuth={oktaAuth} >
         <div className="App">
           <Navbar />
           <Route path='/' exact component={Home} />

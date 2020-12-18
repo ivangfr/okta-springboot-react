@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@okta/okta-react": "^3.0.8",
+    "@okta/okta-react": "^4.1.0",
     "axios": "^0.21.0",
     "materialize-css": "^1.0.0",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.32",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.0"
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

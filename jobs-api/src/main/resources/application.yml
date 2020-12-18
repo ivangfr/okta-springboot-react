@@ -28,7 +28,10 @@ springdoc:
   swagger-ui:
     groups-order: DESC
 
-number-of-fake-jobs: 100
+app:
+  cors:
+    allowed-origins: http://localhost:3000
+  number-of-fake-jobs: 100
 
 logging:
   level:

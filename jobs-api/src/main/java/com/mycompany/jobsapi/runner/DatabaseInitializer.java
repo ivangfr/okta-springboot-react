@@ -20,11 +20,11 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final JobService jobService;
 
-    @Value("${number-of-fake-jobs:0}")
+    @Value("${app.number-of-fake-jobs:0}")
     private int numberOfFakeJobs;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("Number of fake jobs to be created: {}", numberOfFakeJobs);
         if (numberOfFakeJobs <= 0) {
             return;

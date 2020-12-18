@@ -5,7 +5,7 @@ import M from 'materialize-css'
 
 class Navbar extends Component {
   state = {
-    authenticated: null,
+    authenticated: false,
     user: null
   }
 
@@ -23,13 +23,13 @@ class Navbar extends Component {
   checkAuthentication = async () => {
     const authenticated = await this.props.authState.isAuthenticated
     if (authenticated !== this.state.authenticated) {
-      const user = await this.props.authService.getUser()
+      const user = await this.props.oktaAuth.getUser()
       this.setState({ authenticated, user })
     }
   }
 
   logHandleLogInOut = async () => {
-    this.state.authenticated ? this.props.authService.logout('/') : this.props.authService.login('/')
+    this.state.authenticated ? this.props.oktaAuth.signOut('/') : this.props.oktaAuth.signInWithRedirect('/')
   }
 
   render() {

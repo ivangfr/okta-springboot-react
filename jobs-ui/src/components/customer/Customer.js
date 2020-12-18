@@ -30,7 +30,7 @@ class Customer extends Component {
   getAllJobs = async (page, size) => {
     API.get(`jobs?page=${page}&size=${size}`, {
       headers: {
-        'Authorization': 'Bearer ' + await this.props.authState.accessToken
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken.value
       }
     })
       .then(response => {
@@ -57,7 +57,7 @@ class Customer extends Component {
     API.put(`jobs/search?page=${page}&size=${size}`, { 'text': text }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + await this.props.authState.accessToken
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken.value
       }
     })
       .then(response => {
