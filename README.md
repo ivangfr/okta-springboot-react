@@ -270,7 +270,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 > **Note:** If you are using the person `luigi.bros@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
-## Shutdown Application
+## Shutdown Applications
 
 - Go to `jobs-api` and `jobs-ui` terminals and press `Ctrl+C`
 
