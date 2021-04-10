@@ -61,29 +61,22 @@ The picture below is how `Okta Admin Dashboard` looks like
 ### Add Application
 
 - In `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
-
 - On the next page, click `Add Application` button
-
 - Then, click `Create New App` button
-
 - Select `Single-Page App` as _Platform_, `OpenID Connect` as _Sign on method_, and click `Create` button
-
 - Enter the following values in the form and, once it's done, click `Save` button
   - Application name: `Jobs Portal SPA`
   - Login redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
   - Logout redirect URIs: `http://localhost:3000`
-
 - On the next screen, it's shown the 2 important values we will need to configure and run the `Jobs Portal SPA`: `Client ID` and `Okta Domain`
 
 ### Create groups
 
 - In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
-
 - Add Staff Group
   - Click `Add Group` button
   - Enter `JOBS_STAFF` for the _Name_ and `Jobs Staff Group` for the _Group Description_
   - Click `Add Group` button
-
 - Add Customer Group
   - Click `Add Group` button
   - Enter `JOBS_CUSTOMER` for the _Name_ and `Jobs Customer Group` for the _Group Description_
@@ -92,7 +85,6 @@ The picture below is how `Okta Admin Dashboard` looks like
 ### Add people
 
 - In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
-
 - Click `Add person` button
 - Enter the following information for the Staff person
   - First name: `Mario`
@@ -104,7 +96,6 @@ The picture below is how `Okta Admin Dashboard` looks like
     (Set a strong password in the text-field that will appear)
   - `Uncheck` the check-box that says _"User must change password on first login"_
 - Click `Save and Add Another` button
-
 - Enter the following information for the Customer person
   - First name: `Luigi`
   - Last name: `Bros`
@@ -122,7 +113,6 @@ The picture below is how `Okta Admin Dashboard` looks like
 - Select `JOBS_STAFF`
 - Click `Manage Apps` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
-
 - On the main menu on the left, click `Applications` menu and then `Groups` sub-menu
 - Select `JOBS_CUSTOMER`
 - Click `Manage Apps` button
@@ -142,7 +132,7 @@ The picture below is how `Okta Admin Dashboard` looks like
 - **jobs-api**
 
   - In a terminal, inside `okta-springboot-react/jobs-api` folder
-  
+
   - Export the following environment variables. Those values were obtained while (adding Application)[#add-application]
     ```
     export OKTA_DOMAIN=...
@@ -294,13 +284,11 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 ### Delete Person
 
 - In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
-
 - Click `Mario Bros` in the People list
 - In `Mario Bros` profile, click `More Actions` multi-button and then `Deactivate`
 - Confirm deactivation by clicking on `Deactivate` button
 - To finish, still in `Mario Bros` profile, click `Delete` button
 - Confirm deletion by clicking on `Delete` button
-
 - Click `Luigi Bros` in the People list
 - In `Luigi Bros` profile, click `More Actions` multi-button and then `Deactivate`
 - Confirm deactivation by clicking on `Deactivate` button
@@ -310,11 +298,9 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 ### Delete Groups
 
 - In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
-
 - Select `JOBS_STAFF`
 - In `JOBS_STAFF` profile, click `Delete Group` button
 - Confirm deletion by clicking on `Delete Group` button
-
 - Select `JOBS_CUSTOMER`
 - In `JOBS_CUSTOMER` profile, click `Delete Group` button
 - Confirm deletion by clicking on `Delete Group` button
