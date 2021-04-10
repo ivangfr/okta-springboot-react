@@ -30,7 +30,7 @@ springdoc:
 
 app:
   cors:
-    allowed-origins: http://localhost:3000
+    allowed-origins: "*"
   number-of-fake-jobs: 100
 
 logging:
