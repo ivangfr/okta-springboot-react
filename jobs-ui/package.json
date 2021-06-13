@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@okta/okta-react": "^5.1.1",
+    "@okta/okta-react": "^5.1.2",
     "axios": "^0.21.1",
     "materialize-css": "^1.0.0",
     "moment": "^2.29.1",

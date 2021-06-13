@@ -45,7 +45,7 @@ The goal of this project is to implement an application where a user can manage 
 
 ### Access Developer Edition Account
 
-- If you do not already have a Developer Edition Account, you can create one at https://developer.okta.com/signup/
+- If you do not have a Developer Edition Account, you can create one at https://developer.okta.com/signup/
 - If you already have, access https://developer.okta.com/login/
 
 ### Access Okta Admin Dashboard
@@ -60,19 +60,20 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 ### Add Application
 
-- In `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
-- On the next page, click `Add Application` button
-- Then, click `Create New App` button
-- Select `Single-Page App` as _Platform_, `OpenID Connect` as _Sign on method_, and click `Create` button
-- Enter the following values in the form and, once it's done, click `Save` button
-  - Application name: `Jobs Portal SPA`
-  - Login redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
-  - Logout redirect URIs: `http://localhost:3000`
+- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
+- In the next page, click `Create App Integration` button
+- Select `OIDC - OpenID Connect` as _Sign on method_, `Single-Page Application` as _Application type_, and click `Next` button
+- Enter the following values in the form.
+  - App integration name : `Jobs Portal SPA`
+  - Grant type: check `Authorization Code` and `Implicit`
+  - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
+  - Sign-out redirect URIs: `http://localhost:3000`
+- Click `Save` button
 - On the next screen, it's shown the 2 important values we will need to configure and run the `Jobs Portal SPA`: `Client ID` and `Okta Domain`
 
 ### Create groups
 
-- In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Add Staff Group
   - Click `Add Group` button
   - Enter `JOBS_STAFF` for the _Name_ and `Jobs Staff Group` for the _Group Description_
@@ -84,36 +85,36 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 ### Add people
 
-- In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
 - Click `Add person` button
 - Enter the following information for the Staff person
   - First name: `Mario`
   - Last name: `Bros`
   - Username: `mario.bros@jobs.com`
   - Primary email: `mario.bros@jobs.com`
-  - Groups: `JOBS_STAFF`
+  - Groups: `JOBS_STAFF` (the group will popup; select it to add it)
   - Password: `Set by admin`
-    (Set a strong password in the text-field that will appear)
+  - Set a strong password in the text-field that will appear
   - `Uncheck` the check-box that says _"User must change password on first login"_
-- Click `Save and Add Another` button
+  - Click `Save and Add Another` button
 - Enter the following information for the Customer person
   - First name: `Luigi`
   - Last name: `Bros`
   - Username: `luigi.bros@jobs.com`
   - Primary email: `luigi.bros@jobs.com`
-  - Groups: `JOBS_CUSTOMER`
+  - Groups: `JOBS_CUSTOMER` (the group will popup; select it to add it)
   - Password: `Set by admin`
-    (Set a strong password in the text-field that will appear)
-  - `Uncheck` the check-box that says _"User must change password on first login"_
-- To finish, click `Save` button
+  - Set a strong password in the text-field that will appear
+  - Leave `Uncheck` the check-box that says _"User must change password on first login"_
+  - Click `Save` button
 
 ### Assign Groups to Application
 
-- In `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Groups` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Select `JOBS_STAFF`
 - Click `Manage Apps` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
-- On the main menu on the left, click `Applications` menu and then `Groups` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Groups` sub-menu again
 - Select `JOBS_CUSTOMER`
 - Click `Manage Apps` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
@@ -131,7 +132,7 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 - **jobs-api**
 
-  - In a terminal, inside `okta-springboot-react/jobs-api` folder
+  - In a terminal, navigate to `okta-springboot-react/jobs-api` folder
 
   - Export the following environment variables. Those values were obtained while (adding Application)[#add-application]
     ```
@@ -262,9 +263,9 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section.
 
-- Open `jobs-api` Swagger website, http://localhost:8080/swagger-ui.html
+- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui.html
 
-- Click `Authorize` button. Paste the access token in the `Value` field. Then, click `Authorize` and on `Close` to finalize.
+- Click `Authorize` button. Paste the access token in the `Value` field. Then, click `Authorize` and `Close` to finalize.
 
 - Done! You can now access the sensitive endpoints.
 
@@ -272,7 +273,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 ## Shutdown Applications
 
-- Go to `jobs-api` and `jobs-ui` terminals and press `Ctrl+C`
+- Go to the terminals where `jobs-api` and `jobs-ui` are running and press `Ctrl+C`
 
 - To stop and remove containers, network and volumes, run in a terminal the following command inside `okta-springboot-react` root folder
   ```
@@ -283,35 +284,35 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 ### Delete Person
 
-- In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
 - Click `Mario Bros` in the People list
 - In `Mario Bros` profile, click `More Actions` multi-button and then `Deactivate`
-- Confirm deactivation by clicking on `Deactivate` button
-- To finish, still in `Mario Bros` profile, click `Delete` button
-- Confirm deletion by clicking on `Delete` button
+- Confirm deactivation by clicking `Deactivate` button
+- Still in `Mario Bros` profile, click `Delete` button
+- Confirm deletion by clicking `Delete` button
 - Click `Luigi Bros` in the People list
 - In `Luigi Bros` profile, click `More Actions` multi-button and then `Deactivate`
-- Confirm deactivation by clicking on `Deactivate` button
-- To finish, still in `Luigi Bros` profile, click `Delete` button
-- Confirm deletion by clicking on `Delete` button
+- Confirm deactivation by clicking `Deactivate` button
+- Still in `Luigi Bros` profile, click `Delete` button
+- Confirm deletion by clicking `Delete` button
 
 ### Delete Groups
 
-- In `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
-- Select `JOBS_STAFF`
-- In `JOBS_STAFF` profile, click `Delete Group` button
-- Confirm deletion by clicking on `Delete Group` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Select `JOBS_CUSTOMER`
 - In `JOBS_CUSTOMER` profile, click `Delete Group` button
-- Confirm deletion by clicking on `Delete Group` button
+- Confirm deletion by clicking `Delete Group` button
+- Select `JOBS_STAFF`
+- In `JOBS_STAFF` profile, click `Delete Group` button
+- Confirm deletion by clicking `Delete Group` button
 
 ### Delete Application
 
-- In `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
 - In Application list whose status is `ACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Deactivate`
-- Confirm deactivation by clicking on `Deactivate Application` button
+- Confirm deactivation by clicking `Deactivate Application` button
 - In Application list whose status is `INACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Delete`
-- Confirm deletion by clicking on `Delete Application` button
+- Confirm deletion by clicking `Delete Application` button
 
 ## How to upgrade jobs-ui dependencies to latest version
 
