@@ -136,8 +136,8 @@ The picture below is how `Okta Admin Dashboard` looks like
 
   - Export the following environment variables. Those values were obtained while (adding Application)[#add-application]
     ```
-    export OKTA_DOMAIN=...
     export OKTA_CLIENT_ID=...
+    export OKTA_DOMAIN=...
     ```
 
   - Run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`
@@ -151,8 +151,8 @@ The picture below is how `Okta Admin Dashboard` looks like
 
   - Create a file called `.env.local` with the following content. Those values were obtained while (adding Application)[#add-application]
     ```
-    REACT_APP_OKTA_ORG_URL=https://<OKTA_DOMAIN>
     REACT_APP_OKTA_CLIENT_ID=<OKTA_CLIENT_ID>
+    REACT_APP_OKTA_ORG_URL=https://<OKTA_DOMAIN>
     ```
 
   - If you are running `jobs-ui` for the first time, execute the [`npm`](https://www.npmjs.com/) command below
@@ -191,8 +191,8 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - In a terminal, create the following environment variables. Those values were obtained while (adding Application)[#add-application]
   ```
-  OKTA_DOMAIN=...
   OKTA_CLIENT_ID=...
+  OKTA_DOMAIN=...
   ```
 
 - Get Okta Access Token Url
