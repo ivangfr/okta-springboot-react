@@ -62,12 +62,15 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
 - In the next page, click `Create App Integration` button
-- Select `OIDC - OpenID Connect` as _Sign on method_, `Single-Page Application` as _Application type_, and click `Next` button
+- Select `OIDC - OpenID Connect` as _Sign on method_ and `Single-Page Application` as _Application type_. Click `Next` button
 - Enter the following values in the form.
-  - App integration name : `Jobs Portal SPA`
-  - Grant type: check `Authorization Code` and `Implicit`
-  - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
-  - Sign-out redirect URIs: `http://localhost:3000`
+  - General Settings
+    - App integration name: `Jobs Portal SPA`
+    - Grant type: check `Authorization Code` and `Implicit`
+    - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
+    - Sign-out redirect URIs: `http://localhost:3000`
+  - Assignments
+    - Controlled access: `Skip group assignment for now`
 - Click `Save` button
 - On the next screen, it's shown the 2 important values we will need to configure and run the `Jobs Portal SPA`: `Client ID` and `Okta Domain`
 
@@ -271,7 +274,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 > **Note:** If you are using the person `luigi.bros@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
-## Shutdown Applications
+## Shutdown
 
 - Go to the terminals where `jobs-api` and `jobs-ui` are running and press `Ctrl+C`
 
@@ -280,9 +283,11 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
   docker-compose down -v
   ```
 
-## Okta Clean Up
+## Cleanup
 
-### Delete Person
+### Okta Configuration
+
+#### Delete Person
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
 - Click `Mario Bros` in the People list
@@ -296,7 +301,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 - Still in `Luigi Bros` profile, click `Delete` button
 - Confirm deletion by clicking `Delete` button
 
-### Delete Groups
+#### Delete Groups
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Select `JOBS_CUSTOMER`
@@ -306,7 +311,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 - In `JOBS_STAFF` profile, click `Delete Group` button
 - Confirm deletion by clicking `Delete Group` button
 
-### Delete Application
+#### Delete Application
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
 - In Application list whose status is `ACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Deactivate`

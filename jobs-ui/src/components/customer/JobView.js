@@ -15,7 +15,7 @@ class JobView extends Component {
 
     API.get(`jobs/${id}`, {
       headers: {
-        'Authorization': 'Bearer ' + await this.props.authState.accessToken.value
+        'Authorization': 'Bearer ' + await this.props.authState.accessToken.accessToken
       }
     })
       .then(response => {

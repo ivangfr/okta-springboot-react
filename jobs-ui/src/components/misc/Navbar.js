@@ -21,10 +21,12 @@ class Navbar extends Component {
   }
 
   checkAuthentication = async () => {
-    const authenticated = await this.props.authState.isAuthenticated
-    if (authenticated !== this.state.authenticated) {
-      const user = await this.props.oktaAuth.getUser()
-      this.setState({ authenticated, user })
+    if (this.props.authState) {
+      const authenticated = await this.props.authState.isAuthenticated
+      if (authenticated !== this.state.authenticated) {
+        const user = await this.props.oktaAuth.getUser()
+        this.setState({ authenticated, user })
+      }
     }
   }
 
