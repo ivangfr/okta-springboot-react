@@ -124,11 +124,14 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 ## Start environment
 
-- Open a terminal
-
-- Inside `okta-springboot-react` root folder run
+- Open a terminal and inside `okta-springboot-react` root folder run
   ```
   docker-compose up -d
+  ```
+
+- Wait for `elasticsearch` Docker container to be with status `running (healthy)`. You can check it by running
+  ```
+  docker-compose ps
   ```
 
 ## Running applications

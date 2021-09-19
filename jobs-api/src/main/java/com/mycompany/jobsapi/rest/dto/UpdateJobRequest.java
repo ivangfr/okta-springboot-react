@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class UpdateJobDto {
+public class UpdateJobRequest {
 
     @Schema(example = "Senior Software Developer")
     private String title;
@@ -17,5 +17,4 @@ public class UpdateJobDto {
 
     @Schema(example = "Senior Software Developer with more than 8 years experience")
     private String description;
-
 }

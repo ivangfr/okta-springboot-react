@@ -26,5 +26,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String JOBS_STAFF = "JOBS_STAFF";
     private static final String JOBS_CUSTOMER = "JOBS_CUSTOMER";
-
 }

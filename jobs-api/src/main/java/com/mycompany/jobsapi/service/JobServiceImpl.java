@@ -49,5 +49,4 @@ public class JobServiceImpl implements JobService {
     public Page<Job> search(String text, Pageable pageable) {
         return jobRepository.findJobsUsingQueryStringQuery(text, pageable);
     }
-
 }

@@ -19,5 +19,4 @@ public interface JobService {
     void deleteJob(Job job);
 
     Page<Job> search(String text, Pageable pageable);
-
 }

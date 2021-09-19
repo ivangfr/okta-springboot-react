@@ -16,5 +16,4 @@ public class CallbackController {
     public Map<String, String> authenticate(@RequestBody MultiValueMap<String, String> queryMap) {
         return queryMap.toSingleValueMap();
     }
-
 }

@@ -1,9 +1,9 @@
 package com.mycompany.jobsapi.mapper;
 
 import com.mycompany.jobsapi.model.Job;
-import com.mycompany.jobsapi.rest.dto.CreateJobDto;
-import com.mycompany.jobsapi.rest.dto.JobDto;
-import com.mycompany.jobsapi.rest.dto.UpdateJobDto;
+import com.mycompany.jobsapi.rest.dto.CreateJobRequest;
+import com.mycompany.jobsapi.rest.dto.JobResponse;
+import com.mycompany.jobsapi.rest.dto.UpdateJobRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -14,10 +14,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 )
 public interface JobMapper {
 
-    JobDto toJobDto(Job job);
+    JobResponse toJobResponse(Job job);
 
-    Job toJob(CreateJobDto createJobDto);
+    Job toJob(CreateJobRequest createJobRequest);
 
-    void updateJobFromDto(UpdateJobDto updateJobDto, @MappingTarget Job job);
-
+    void updateJobFromRequest(UpdateJobRequest updateJobRequest, @MappingTarget Job job);
 }

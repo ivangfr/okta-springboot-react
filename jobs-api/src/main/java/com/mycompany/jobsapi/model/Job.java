@@ -33,5 +33,4 @@ public class Job {
     public Job() {
         this.createDate = Instant.ofEpochSecond(Instant.now().getEpochSecond()).toString();
     }
-
 }

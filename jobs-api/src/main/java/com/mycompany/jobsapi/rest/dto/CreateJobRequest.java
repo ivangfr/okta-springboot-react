@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class CreateJobDto {
+public class CreateJobRequest {
 
     @Schema(example = "Software Developer")
     @NotBlank
@@ -22,5 +22,4 @@ public class CreateJobDto {
     @Schema(example = "Software Developer with more than 5 years experience")
     @NotBlank
     private String description;
-
 }

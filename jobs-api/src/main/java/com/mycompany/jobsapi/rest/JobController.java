@@ -2,10 +2,10 @@ package com.mycompany.jobsapi.rest;
 
 import com.mycompany.jobsapi.mapper.JobMapper;
 import com.mycompany.jobsapi.model.Job;
-import com.mycompany.jobsapi.rest.dto.CreateJobDto;
-import com.mycompany.jobsapi.rest.dto.JobDto;
-import com.mycompany.jobsapi.rest.dto.SearchDto;
-import com.mycompany.jobsapi.rest.dto.UpdateJobDto;
+import com.mycompany.jobsapi.rest.dto.CreateJobRequest;
+import com.mycompany.jobsapi.rest.dto.JobResponse;
+import com.mycompany.jobsapi.rest.dto.SearchRequest;
+import com.mycompany.jobsapi.rest.dto.UpdateJobRequest;
 import com.mycompany.jobsapi.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -48,23 +48,24 @@ public class JobController {
             summary = "Get jobs with pagination",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping
-    public Page<JobDto> getJobs(
-            @ParameterObject @PageableDefault(size = 10, page = 0, sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
+    public Page<JobResponse> getJobs(
+            @ParameterObject @PageableDefault(sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
             Principal principal) {
-        log.info("Request to get a page of jobs (offset = {}, pageSize = {}) made by {}", pageable.getOffset(), pageable.getPageSize(), principal.getName());
-        return jobService.getJobsByPage(pageable).map(jobMapper::toJobDto);
+        log.info("Request to get a page of jobs (offset = {}, pageSize = {}) made by {}",
+                pageable.getOffset(), pageable.getPageSize(), principal.getName());
+        return jobService.getJobsByPage(pageable).map(jobMapper::toJobResponse);
     }
 
     @Operation(summary = "Get the newest jobs")
     @GetMapping("/newest")
-    public List<JobDto> getNewestJobs(@RequestParam(value = "number", required = false, defaultValue = "4") int number) {
+    public List<JobResponse> getNewestJobs(@RequestParam(value = "number", required = false, defaultValue = "4") int number) {
         if (number > 10) {
             log.warn("The parameter number cannot be bigger than 10");
             number = 10;
         }
         return jobService.getNewestJobs(number)
                 .stream()
-                .map(jobMapper::toJobDto)
+                .map(jobMapper::toJobResponse)
                 .collect(Collectors.toList());
     }
 
@@ -72,10 +73,10 @@ public class JobController {
             summary = "Get a job by id",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/{id}")
-    public JobDto getJobById(@PathVariable String id, Principal principal) {
+    public JobResponse getJobById(@PathVariable String id, Principal principal) {
         log.info("Request to get a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
-        return jobMapper.toJobDto(job);
+        return jobMapper.toJobResponse(job);
     }
 
     @Operation(
@@ -83,45 +84,45 @@ public class JobController {
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public JobDto createJob(@Valid @RequestBody CreateJobDto createJobDto, Principal principal) {
+    public JobResponse createJob(@Valid @RequestBody CreateJobRequest createJobRequest, Principal principal) {
         log.info("Request to create a job made by {}", principal.getName());
-        Job job = jobMapper.toJob(createJobDto);
+        Job job = jobMapper.toJob(createJobRequest);
         job = jobService.saveJob(job);
-        return jobMapper.toJobDto(job);
+        return jobMapper.toJobResponse(job);
     }
 
     @Operation(
             summary = "Delete a job",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @DeleteMapping("/{id}")
-    public JobDto deleteJob(@PathVariable String id, Principal principal) {
+    public JobResponse deleteJob(@PathVariable String id, Principal principal) {
         log.info("Request to delete a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         jobService.deleteJob(job);
-        return jobMapper.toJobDto(job);
+        return jobMapper.toJobResponse(job);
     }
 
     @Operation(
             summary = "Update a job",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/{id}")
-    public JobDto updateJob(@PathVariable String id, @Valid @RequestBody UpdateJobDto updateJobDto, Principal principal) {
+    public JobResponse updateJob(@PathVariable String id,
+                                 @Valid @RequestBody UpdateJobRequest updateJobRequest, Principal principal) {
         log.info("Request to update a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
-        jobMapper.updateJobFromDto(updateJobDto, job);
+        jobMapper.updateJobFromRequest(updateJobRequest, job);
         jobService.saveJob(job);
-        return jobMapper.toJobDto(job);
+        return jobMapper.toJobResponse(job);
     }
 
     @Operation(
             summary = "Search for jobs",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/search")
-    public Page<Job> searchJobs(@Valid @RequestBody SearchDto searchDto,
-                                @ParameterObject @PageableDefault(size = 10, page = 0, sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
+    public Page<Job> searchJobs(@Valid @RequestBody SearchRequest searchRequest,
+                                @ParameterObject @PageableDefault(sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
                                 Principal principal) {
-        log.info("Request to search a job with text {} made by {}", searchDto.getText(), principal.getName());
-        return jobService.search(searchDto.getText(), pageable);
+        log.info("Request to search a job with text {} made by {}", searchRequest.getText(), principal.getName());
+        return jobService.search(searchRequest.getText(), pageable);
     }
-
 }

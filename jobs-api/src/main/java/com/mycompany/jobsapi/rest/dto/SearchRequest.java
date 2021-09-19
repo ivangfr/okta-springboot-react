@@ -6,10 +6,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class SearchDto {
+public class SearchRequest {
 
     @NotBlank
     @Schema(title = "text to be searched", example = "\"java developer\" AND (google OR facebook) NOT junior")
     private String text;
-
 }
