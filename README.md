@@ -122,6 +122,23 @@ The picture below is how `Okta Admin Dashboard` looks like
 - Click `Manage Apps` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
 
+### Add Claim
+
+- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu
+- In `Authorization Servers` tab, select the `default`
+- In `Claims` tab, click `Add Claim`
+- Enter the following information for the claim
+  - Name: `groups`
+  - Include in token type:
+    - Select `Access Token`
+    - Keep `Always` in the right field
+  - Value type: `Groups`
+  - Filter:
+    - Select `Matches regrex`
+    - Set `.*` in the right field
+  - Include in: `Any scope`
+  - Click `Create` button
+
 ## Start environment
 
 - Open a terminal and inside `okta-springboot-react` root folder run
@@ -321,6 +338,13 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 - Confirm deactivation by clicking `Deactivate Application` button
 - In Application list whose status is `INACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Delete`
 - Confirm deletion by clicking `Delete Application` button
+
+#### Delete Clain
+
+- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu
+- In `Authorization Servers` tab, select the `default`
+- In `Claims` tab, click the `x` icon related to the `groups` claim created
+- Confirm deletion by clicking `OK` button
 
 ## How to upgrade jobs-ui dependencies to latest version
 
