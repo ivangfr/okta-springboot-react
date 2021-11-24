@@ -115,11 +115,13 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Select `JOBS_STAFF`
-- Click `Manage Apps` button
+- Click `Applications` tab
+- Click `Assign Applications` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
 - In the `Okta Admin Dashboard` main menu on the left, click `Groups` sub-menu again
 - Select `JOBS_CUSTOMER`
-- Click `Manage Apps` button
+- Click `Applications` tab
+- Click `Assign Applications` button
 - Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
 
 ### Add Claim
