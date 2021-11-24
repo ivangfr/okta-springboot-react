@@ -4,11 +4,11 @@ The goal of this project is to implement an application where a user can manage 
 
 ## Project User Interface Preview
 
-![jobs-portal-preview](images/jobs-portal-preview.gif)
+![jobs-portal-preview](documentation/jobs-portal-preview.gif)
 
 ## Project diagram
 
-![project-diagram](images/project-diagram.png)
+![project-diagram](documentation/project-diagram.png)
 
 ## Applications
 
@@ -35,8 +35,8 @@ The goal of this project is to implement an application where a user can manage 
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-- [`npm`](https://www.npmjs.com/get-npm)
+- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`Okta` account](https://developer.okta.com/signup/)
@@ -52,11 +52,11 @@ The goal of this project is to implement an application where a user can manage 
 
 If you are in `Okta Developer Dashboard` home page, click `Admin` button on the top-right
 
-![okta-developer-home](images/okta-developer-home.png)
+![okta-developer-home](documentation/okta-developer-home.png)
 
 The picture below is how `Okta Admin Dashboard` looks like
 
-![okta-admin-dashboard](images/okta-admin-dashboard.png)
+![okta-admin-dashboard](documentation/okta-admin-dashboard.png)
 
 ### Add Application
 
@@ -139,14 +139,14 @@ The picture below is how `Okta Admin Dashboard` looks like
   - Include in: `Any scope`
   - Click `Create` button
 
-## Start environment
+## Start Environment
 
 - Open a terminal and inside `okta-springboot-react` root folder run
   ```
   docker-compose up -d
   ```
 
-- Wait for `elasticsearch` Docker container to be with status `running (healthy)`. You can check it by running
+- Wait for `elasticsearch` Docker container to be up and running. To check it, run
   ```
   docker-compose ps
   ```
@@ -348,7 +348,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 ## How to upgrade jobs-ui dependencies to latest version
 
-- In a terminal, make sure you are in `okta-springboot-react/movies-ui` folder
+- In a terminal, make sure you are in `okta-springboot-react/jobs-ui` folder
 
 - Run the following commands
   ```
