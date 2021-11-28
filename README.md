@@ -327,10 +327,10 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Select `JOBS_CUSTOMER`
-- In `JOBS_CUSTOMER` profile, click `Delete Group` button
+- In `JOBS_CUSTOMER` profile, click `Actions` button and then `Delete` sub-button
 - Confirm deletion by clicking `Delete Group` button
 - Select `JOBS_STAFF`
-- In `JOBS_STAFF` profile, click `Delete Group` button
+- In `JOBS_STAFF` profile, click `Actions` button and then `Delete` sub-button
 - Confirm deletion by clicking `Delete Group` button
 
 #### Delete Application
