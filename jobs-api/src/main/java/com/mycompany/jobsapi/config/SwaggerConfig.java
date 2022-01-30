@@ -5,7 +5,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
-import org.springdoc.core.SpringDocUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,12 +32,6 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi actuatorApi() {
         return GroupedOpenApi.builder().group("actuator").pathsToMatch("/actuator/**").build();
-    }
-
-    // It is needed to handle Pageable
-    static {
-        SpringDocUtils.getConfig()
-                .replaceWithClass(org.springframework.data.domain.Pageable.class, org.springdoc.core.converters.models.Pageable.class);
     }
 
     public static final String BEARER_KEY_SECURITY_SCHEME = "bearer-key";
