@@ -3,7 +3,6 @@ spring:
     name: jobs-api
   data:
     elasticsearch:
-      cluster-name: docker-es-cluster
       cluster-nodes: ${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_PORT:9300}
   elasticsearch:
     rest:

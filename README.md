@@ -66,7 +66,7 @@ The picture below is how `Okta Admin Dashboard` looks like
 - Enter the following values in the form.
   - General Settings
     - App integration name: `Jobs Portal SPA`
-    - Grant type: check `Authorization Code` and `Implicit`
+    - Grant type: check `Authorization Code` and `Implicit (hybrid)`
     - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
     - Sign-out redirect URIs: `http://localhost:3000`
   - Assignments
@@ -79,11 +79,11 @@ The picture below is how `Okta Admin Dashboard` looks like
 - In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
 - Add Staff Group
   - Click `Add Group` button
-  - Enter `JOBS_STAFF` for the _Name_ and `Jobs Staff Group` for the _Group Description_
+  - Enter `JOBS_STAFF` for the _Name_ text-field
   - Click `Add Group` button
 - Add Customer Group
   - Click `Add Group` button
-  - Enter `JOBS_CUSTOMER` for the _Name_ and `Jobs Customer Group` for the _Group Description_
+  - Enter `JOBS_CUSTOMER` for the _Name_ text-field
   - Click `Add Group` button
 
 ### Add people
@@ -354,6 +354,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - Run the following commands
   ```
+  npm upgrade
   npm i -g npm-check-updates
   ncu -u
   npm install
