@@ -11,9 +11,9 @@ import java.util.Map;
 @RestController
 public class CallbackController {
 
-    @Operation(summary = "Endpoint used by Okta to send the access token")
-    @PostMapping("/authenticate")
-    public Map<String, String> authenticate(@RequestBody MultiValueMap<String, String> queryMap) {
+    @Operation(summary = "Endpoint used by Okta to send back the JWT access token")
+    @PostMapping("/callback/token")
+    public Map<String, String> callbackToken(@RequestBody MultiValueMap<String, String> queryMap) {
         return queryMap.toSingleValueMap();
     }
 }

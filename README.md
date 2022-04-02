@@ -14,14 +14,14 @@ The goal of this project is to implement an application where a user can manage 
 
 - ### jobs-api
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Web Java application that exposes a REST API for managing jobs. It has some endpoints that are secured. `jobs-api` uses `Okta` to handle authentication and authorization.
+  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Web Java application that exposes a REST API for managing jobs. It has some endpoints that are secured. `Okta` is used to handle authentication and authorization.
   
-  The table below shows the endpoins, each one are secured or not and the authorization role required to access the secured ones.
+  The table below shows the endpoins, whether they are secured or not, and the authorization role required to access the secured ones.
  
   | Endpoint                | Secured | Role                        |
   | ----------------------- | ------- | --------------------------- |
   | `GET /actuator/*`       |      No |                             |
-  | `POST /authenticate`    |      No |                             |
+  | `POST /callback/token`  |      No |                             |
   | `GET /api/jobs/newest`  |      No |                             |
   | `POST /api/jobs`        |     Yes | `JOBS_STAFF`                |
   | `PUT /api/jobs/{id}`    |     Yes | `JOBS_STAFF`                |
@@ -67,12 +67,12 @@ The picture below is how `Okta Admin Dashboard` looks like
   - General Settings
     - App integration name: `Jobs Portal SPA`
     - Grant type: check `Authorization Code` and `Implicit (hybrid)`
-    - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/authenticate`
+    - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/callback/token`
     - Sign-out redirect URIs: `http://localhost:3000`
   - Assignments
     - Controlled access: `Skip group assignment for now`
 - Click `Save` button
-- On the next screen, it's shown the 2 important values we will need to configure and run the `Jobs Portal SPA`: `Client ID` and `Okta Domain`
+- On the next screen, the `Client ID` and `Okta Domain` of `Jobs Portal SPA` are displayed.
 
 ### Create groups
 
@@ -93,8 +93,8 @@ The picture below is how `Okta Admin Dashboard` looks like
 - Enter the following information for the Staff person
   - First name: `Mario`
   - Last name: `Bros`
-  - Username: `mario.bros@jobs.com`
-  - Primary email: `mario.bros@jobs.com`
+  - Username: `mario.bros@test.com`
+  - Primary email: `mario.bros@test.com`
   - Groups: `JOBS_STAFF` (the group will popup; select it to add it)
   - Password: `Set by admin`
   - Set a strong password in the text-field that will appear
@@ -103,8 +103,8 @@ The picture below is how `Okta Admin Dashboard` looks like
 - Enter the following information for the Customer person
   - First name: `Luigi`
   - Last name: `Bros`
-  - Username: `luigi.bros@jobs.com`
-  - Primary email: `luigi.bros@jobs.com`
+  - Username: `luigi.bros@test.com`
+  - Primary email: `luigi.bros@test.com`
   - Groups: `JOBS_CUSTOMER` (the group will popup; select it to add it)
   - Password: `Set by admin`
   - Set a strong password in the text-field that will appear
@@ -159,7 +159,7 @@ The picture below is how `Okta Admin Dashboard` looks like
 
   - In a terminal, navigate to `okta-springboot-react/jobs-api` folder
 
-  - Export the following environment variables. Those values were obtained while (adding Application)[#add-application]
+  - Export the following environment variables. Those values were obtained while [adding Application](#add-application)
     ```
     export OKTA_CLIENT_ID=...
     export OKTA_DOMAIN=...
@@ -174,7 +174,7 @@ The picture below is how `Okta Admin Dashboard` looks like
 
   - Open a new terminal and navigate to `okta-springboot-react/jobs-ui` folder
 
-  - Create a file called `.env.local` with the following content. Those values were obtained while (adding Application)[#add-application]
+  - Create a file called `.env.local` with the following content. Those values were obtained while [adding Application](#add-application)
     ```
     REACT_APP_OKTA_CLIENT_ID=<OKTA_CLIENT_ID>
     REACT_APP_OKTA_ORG_URL=https://<OKTA_DOMAIN>
@@ -208,13 +208,13 @@ The picture below is how `Okta Admin Dashboard` looks like
 
 - Done!
 
-> **Note:** If you are using the person `luigi.bros@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Getting Access Token
 
-In order to use just the `jobs-api` endpoints, you must have an access token. Below are the steps to get it.
+In order to use just the `jobs-api` endpoints, you must have an `JWT` access token. Below are the steps to get it.
 
-- In a terminal, create the following environment variables. Those values were obtained while (adding Application)[#add-application]
+- In a terminal, create the following environment variables. Those values were obtained while [adding Application][#add-application]
   ```
   OKTA_CLIENT_ID=...
   OKTA_DOMAIN=...
@@ -222,9 +222,9 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - Get Okta Access Token Url
   ```
-  export OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
+  OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
   client_id=${OKTA_CLIENT_ID}\
-  &redirect_uri=http://localhost:8080/authenticate\
+  &redirect_uri=http://localhost:8080/callback/token\
   &scope=openid\
   &response_type=token\
   &response_mode=form_post\
@@ -234,15 +234,25 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
   echo $OKTA_ACCESS_TOKEN_URL
   ```
 
-- Copy the Okta Access Token Url from the previous step and past it in a browser
+- Copy the Okta Access Token Url from the previous step and paste it in a browser
 
 - The Okta login page will appear. Enter the username & password of the person added at the step [`Configuring Okta > Add people`](#add-people) and click `Sign In` button
 
-- It will redirect to `authenticate` endpoint of `jobs-api` and the `Access token` will be displayed.
+- It will redirect to `/callback/token` endpoint of `jobs-api` and the `Access token` will be displayed, together with other information
+  ```
+  {
+    "state": "state",
+    "access_token": "eyJraWQiOiJyNFdY...",
+    "token_type": "Bearer",
+    "expires_in": "3600",
+    "scope": "openid"
+  }
+  ```
+  > **Tip:** In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
 
 ## Calling jobs-api endpoints using curl
 
-- **`GET api/jobs/newest`**
+- **`GET /api/jobs/newest`**
 
   The `api/jobs/newest` endpoint is public, so we can access it without any problem.
   ```
@@ -254,7 +264,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
   [{"id":"uuulE2sBTYouQKNL1uoV", ...},{"id":"u-ulE2sBTYouQKNL1-qb", ...}]
   ```
 
-- **`GET api/jobs` without Access Token**
+- **`GET /api/jobs` without Access Token**
 
   Try to get the list of jobs without informing the access token.
   ```
@@ -265,7 +275,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
   HTTP/1.1 401
   ```
 
-- **`GET api/jobs` with Access Token**
+- **`GET /api/jobs` with Access Token**
 
   First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section. Then, create an environment variable for the access token.
   ```
@@ -282,7 +292,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
   {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
   ```
 
-  > **Note:** If you are using the person `luigi.bros@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+  > **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Using jobs-api with Swagger
 
@@ -294,7 +304,7 @@ In order to use just the `jobs-api` endpoints, you must have an access token. Be
 
 - Done! You can now access the sensitive endpoints.
 
-> **Note:** If you are using the person `luigi.bros@jobs.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Shutdown
 

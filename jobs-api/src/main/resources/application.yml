@@ -37,3 +37,4 @@ logging:
   level:
     org.springframework.data.elasticsearch.core: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework.security: DEBUG
