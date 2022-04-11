@@ -351,7 +351,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 - In Application list whose status is `INACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Delete`
 - Confirm deletion by clicking `Delete Application` button
 
-#### Delete Clain
+#### Delete Claim
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu
 - In `Authorization Servers` tab, select the `default`
