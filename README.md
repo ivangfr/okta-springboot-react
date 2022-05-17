@@ -50,11 +50,7 @@ The goal of this project is to implement an application where a user can manage 
 
 ### Access Okta Admin Dashboard
 
-If you are in `Okta Developer Dashboard` home page, click `Admin` button on the top-right
-
-![okta-developer-home](documentation/okta-developer-home.png)
-
-The picture below is how `Okta Admin Dashboard` looks like
+The picture below shows how `Okta Admin Dashboard` looks like
 
 ![okta-admin-dashboard](documentation/okta-admin-dashboard.png)
 
