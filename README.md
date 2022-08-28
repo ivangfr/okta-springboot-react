@@ -35,7 +35,7 @@ The goal of this project is to implement an application where a user can manage 
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
@@ -52,7 +52,7 @@ The goal of this project is to implement an application where a user can manage 
 
 The picture below shows how `Okta Admin Dashboard` looks like
 
-![okta-admin-dashboard](documentation/okta-admin-dashboard.png)
+![okta-admin-dashboard](documentation/okta-admin-dashboard.jpeg)
 
 ### Add Application
 
@@ -68,7 +68,7 @@ The picture below shows how `Okta Admin Dashboard` looks like
   - Assignments
     - Controlled access: `Skip group assignment for now`
 - Click `Save` button
-- On the next screen, the `Client ID` and `Okta Domain` of `Jobs Portal SPA` are displayed.
+- On the next screen, the `Client ID` of `Jobs Portal SPA` are displayed. The `Okta Domain` can be obtained by clicking the button-menu present on the up-right corner of the screen.
 
 ### Create groups
 
@@ -76,11 +76,11 @@ The picture below shows how `Okta Admin Dashboard` looks like
 - Add Staff Group
   - Click `Add Group` button
   - Enter `JOBS_STAFF` for the _Name_ text-field
-  - Click `Add Group` button
+  - Click `Save` button
 - Add Customer Group
   - Click `Add Group` button
   - Enter `JOBS_CUSTOMER` for the _Name_ text-field
-  - Click `Add Group` button
+  - Click `Save` button
 
 ### Add people
 
@@ -189,10 +189,10 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 ## Applications URLs
 
-| Application | URL                                   |
-| ----------- | ------------------------------------- |
-| jobs-api    | http://localhost:8080/swagger-ui.html |
-| jobs-ui     | http://localhost:3000                 |
+| Application | URL                                         |
+| ----------- | ------------------------------------------- |
+| jobs-api    | http://localhost:8080/swagger-ui/index.html |
+| jobs-ui     | http://localhost:3000                       |
 
 ## Using jobs-ui
 
@@ -204,7 +204,7 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 - Done!
 
-> **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note**: If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Getting Access Token
 
@@ -244,7 +244,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
     "scope": "openid"
   }
   ```
-  > **Tip:** In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
+  > **Note**: In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
 
 ## Calling jobs-api endpoints using curl
 
@@ -288,19 +288,19 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
   {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
   ```
 
-  > **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+  > **Note**: If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Using jobs-api with Swagger
 
 - First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section.
 
-- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui.html
+- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui/index.html
 
 - Click `Authorize` button. Paste the access token in the `Value` field. Then, click `Authorize` and `Close` to finalize.
 
 - Done! You can now access the sensitive endpoints.
 
-> **Note:** If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
+> **Note**: If you are using the person `luigi.bros@test.com`, you will not be able to create/update/delete a job because it doesn't have the required role for it.
 
 ## Shutdown
 
