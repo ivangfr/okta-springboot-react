@@ -57,7 +57,7 @@ The picture below shows how `Okta Admin Dashboard` looks like
 ### Add Application
 
 - In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
-- In the next page, click `Create App Integration` button
+- On the next page, click `Create App Integration` button
 - Select `OIDC - OpenID Connect` as _Sign on method_ and `Single-Page Application` as _Application type_. Click `Next` button
 - Enter the following values in the form.
   - General Settings
@@ -189,10 +189,10 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 ## Applications URLs
 
-| Application | URL                                         |
-| ----------- | ------------------------------------------- |
-| jobs-api    | http://localhost:8080/swagger-ui/index.html |
-| jobs-ui     | http://localhost:3000                       |
+| Application | URL                                   |
+| ----------- | ------------------------------------- |
+| jobs-api    | http://localhost:8080/swagger-ui.html |
+| jobs-ui     | http://localhost:3000                 |
 
 ## Using jobs-ui
 
@@ -294,7 +294,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 
 - First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section.
 
-- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui/index.html
+- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui.html
 
 - Click `Authorize` button. Paste the access token in the `Value` field. Then, click `Authorize` and `Close` to finalize.
 

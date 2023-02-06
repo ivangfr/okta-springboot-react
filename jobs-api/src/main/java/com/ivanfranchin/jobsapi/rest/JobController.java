@@ -1,17 +1,18 @@
 package com.ivanfranchin.jobsapi.rest;
 
 import com.ivanfranchin.jobsapi.mapper.JobMapper;
+import com.ivanfranchin.jobsapi.model.Job;
 import com.ivanfranchin.jobsapi.rest.dto.CreateJobRequest;
 import com.ivanfranchin.jobsapi.rest.dto.JobResponse;
-import com.ivanfranchin.jobsapi.service.JobService;
-import com.ivanfranchin.jobsapi.model.Job;
 import com.ivanfranchin.jobsapi.rest.dto.SearchRequest;
 import com.ivanfranchin.jobsapi.rest.dto.UpdateJobRequest;
+import com.ivanfranchin.jobsapi.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.api.annotations.ParameterObject;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
