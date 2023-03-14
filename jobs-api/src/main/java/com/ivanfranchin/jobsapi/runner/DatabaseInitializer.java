@@ -73,7 +73,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             "Facebook;https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Facebook_Logo_%282019%29.svg/500px-Facebook_Logo_%282019%29.svg.png",
             "Yahoo;https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Yahoo%21_%282019%29.svg/420px-Yahoo%21_%282019%29.svg.png",
             "Microsoft;https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/440px-Microsoft_logo_%282012%29.svg.png",
-            "Takeaway;https://upload.wikimedia.org/wikipedia/de/1/1d/Takeaway.com_logo.svg",
+            "Just Eat Takeaway;https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Just_Eat_Takeaway_Logo_6.2020.svg/2880px-Just_Eat_Takeaway_Logo_6.2020.svg.png",
             "Oracle;https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Oracle_Logo.svg/440px-Oracle_Logo.svg.png");
     private static final List<String> LOCATIONS = Arrays.asList("Berlin/Germany", "New York City/US", "Porto/Portugal",
             "Sao Paulo/Brazil");

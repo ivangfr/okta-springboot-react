@@ -33,4 +33,11 @@ public class Job {
     public Job() {
         this.createDate = Instant.ofEpochSecond(Instant.now().getEpochSecond()).toString();
     }
+
+    public Job(String title, String company, String logoUrl, String description) {
+        this.title = title;
+        this.company = company;
+        this.logoUrl = logoUrl;
+        this.description = description;
+    }
 }
