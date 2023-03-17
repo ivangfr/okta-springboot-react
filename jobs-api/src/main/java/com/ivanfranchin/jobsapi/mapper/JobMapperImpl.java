@@ -11,12 +11,17 @@ public class JobMapperImpl implements JobMapper {
 
     @Override
     public JobResponse toJobResponse(Job job) {
-        return job == null ?
-                null : new JobResponse(job.getId(), job.getTitle(), job.getCompany(), job.getLogoUrl(), job.getDescription(), job.getCreateDate());
+        if (job == null) {
+            return null;
+        }
+        return new JobResponse(job.getId(), job.getTitle(), job.getCompany(), job.getLogoUrl(), job.getDescription(), job.getCreateDate());
     }
 
     @Override
     public Job toJob(CreateJobRequest createJobRequest) {
+        if (createJobRequest == null) {
+            return null;
+        }
         return new Job(createJobRequest.getTitle(), createJobRequest.getCompany(), createJobRequest.getLogoUrl(), createJobRequest.getDescription());
     }
 

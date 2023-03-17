@@ -8,7 +8,7 @@ The goal of this project is to implement an application where a user can manage 
 
 ## Project diagram
 
-![project-diagram](documentation/project-diagram.png)
+![project-diagram](documentation/project-diagram.jpeg)
 
 ## Applications
 
