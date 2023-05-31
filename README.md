@@ -19,7 +19,7 @@ The goal of this project is to implement an application where a user can manage 
   The table below shows the endpoins, whether they are secured or not, and the authorization role required to access the secured ones.
  
   | Endpoint                | Secured | Role                        |
-  | ----------------------- | ------- | --------------------------- |
+  | ----------------------- | ------- |-----------------------------|
   | `GET /actuator/*`       |      No |                             |
   | `POST /callback/token`  |      No |                             |
   | `GET /api/jobs/newest`  |      No |                             |
@@ -157,8 +157,8 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
   - Export the following environment variables. Those values were obtained while [adding Application](#add-application)
     ```
-    export OKTA_CLIENT_ID=...
     export OKTA_DOMAIN=...
+    export OKTA_CLIENT_ID=...
     ```
 
   - Run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`
@@ -172,8 +172,8 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
   - Create a file called `.env.local` with the following content. Those values were obtained while [adding Application](#add-application)
     ```
-    REACT_APP_OKTA_CLIENT_ID=<OKTA_CLIENT_ID>
     REACT_APP_OKTA_ORG_URL=https://<OKTA_DOMAIN>
+    REACT_APP_OKTA_CLIENT_ID=<OKTA_CLIENT_ID>
     ```
 
   - If you are running `jobs-ui` for the first time, execute the [`npm`](https://www.npmjs.com/) command below
@@ -210,10 +210,10 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 In order to use just the `jobs-api` endpoints, you must have an `JWT` access token. Below are the steps to get it.
 
-- In a terminal, create the following environment variables. Those values were obtained while [adding Application][#add-application]
+- In a terminal, create the following environment variables. Those values were obtained while [adding Application](#add-application)
   ```
-  OKTA_CLIENT_ID=...
   OKTA_DOMAIN=...
+  OKTA_CLIENT_ID=...
   ```
 
 - Get Okta Access Token Url
@@ -225,7 +225,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
   &response_type=token\
   &response_mode=form_post\
   &state=state\
-  &nonce=6jtp65rt9jf"
+  &nonce=myNonceValue"
 
   echo $OKTA_ACCESS_TOKEN_URL
   ```
