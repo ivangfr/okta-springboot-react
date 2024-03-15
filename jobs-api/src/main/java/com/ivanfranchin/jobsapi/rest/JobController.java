@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,9 +50,9 @@ public class JobController {
     @GetMapping
     public Page<JobResponse> getJobs(
             @ParameterObject @PageableDefault(sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
-            JwtAuthenticationToken token) {
+            Principal principal) {
         log.info("Request to get a page of jobs (offset = {}, pageSize = {}) made by {}",
-                pageable.getOffset(), pageable.getPageSize(), token.getName());
+                pageable.getOffset(), pageable.getPageSize(), principal.getName());
         return jobService.getJobsByPage(pageable).map(jobMapper::toJobResponse);
     }
 
@@ -73,8 +73,8 @@ public class JobController {
             summary = "Get a job by id",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/{id}")
-    public JobResponse getJobById(@PathVariable String id, JwtAuthenticationToken token) {
-        log.info("Request to get a job with id {} made by {}", id, token.getName());
+    public JobResponse getJobById(@PathVariable String id, Principal principal) {
+        log.info("Request to get a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         return jobMapper.toJobResponse(job);
     }
@@ -84,8 +84,8 @@ public class JobController {
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public JobResponse createJob(@Valid @RequestBody CreateJobRequest createJobRequest, JwtAuthenticationToken token) {
-        log.info("Request to create a job made by {}", token.getName());
+    public JobResponse createJob(@Valid @RequestBody CreateJobRequest createJobRequest, Principal principal) {
+        log.info("Request to create a job made by {}", principal.getName());
         Job job = jobMapper.toJob(createJobRequest);
         job = jobService.saveJob(job);
         return jobMapper.toJobResponse(job);
@@ -95,8 +95,8 @@ public class JobController {
             summary = "Delete a job",
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @DeleteMapping("/{id}")
-    public JobResponse deleteJob(@PathVariable String id, JwtAuthenticationToken token) {
-        log.info("Request to delete a job with id {} made by {}", id, token.getName());
+    public JobResponse deleteJob(@PathVariable String id, Principal principal) {
+        log.info("Request to delete a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         jobService.deleteJob(job);
         return jobMapper.toJobResponse(job);
@@ -107,8 +107,8 @@ public class JobController {
             security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PutMapping("/{id}")
     public JobResponse updateJob(@PathVariable String id,
-                                 @Valid @RequestBody UpdateJobRequest updateJobRequest, JwtAuthenticationToken token) {
-        log.info("Request to update a job with id {} made by {}", id, token.getName());
+                                 @Valid @RequestBody UpdateJobRequest updateJobRequest, Principal principal) {
+        log.info("Request to update a job with id {} made by {}", id, principal.getName());
         Job job = jobService.validateAndGetJobById(id);
         jobMapper.updateJobFromRequest(updateJobRequest, job);
         jobService.saveJob(job);
@@ -121,8 +121,8 @@ public class JobController {
     @PutMapping("/search")
     public Page<Job> searchJobs(@Valid @RequestBody SearchRequest searchRequest,
                                 @ParameterObject @PageableDefault(sort = {"createDate"}, direction = Direction.DESC) Pageable pageable,
-                                JwtAuthenticationToken token) {
-        log.info("Request to search a job with text {} made by {}", searchRequest.getText(), token.getName());
+                                Principal principal) {
+        log.info("Request to search a job with text {} made by {}", searchRequest.getText(), principal.getName());
         return jobService.search(searchRequest.getText(), pageable);
     }
 }

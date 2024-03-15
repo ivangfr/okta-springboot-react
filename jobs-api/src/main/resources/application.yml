@@ -8,7 +8,7 @@ okta:
   oauth2:
     issuer: https://${OKTA_DOMAIN}/oauth2/default
     clientId: ${OKTA_CLIENT_ID}
-    rolesClaim: groups
+    groupsClaim: groups
 
 management:
   endpoints:
