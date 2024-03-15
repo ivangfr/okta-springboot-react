@@ -49,7 +49,6 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`Okta` account](https://developer.okta.com/signup/)
 
 ## Configuring Okta
@@ -79,7 +78,7 @@ The picture below shows how `Okta Admin Dashboard` looks like
   - Assignments
     - Controlled access: `Skip group assignment for now`
 - Click `Save` button
-- On the next screen, the `Client ID` of `Jobs Portal SPA` are displayed. The `Okta Domain` can be obtained by clicking the button-menu present on the up-right corner of the screen.
+- On the next screen, the `Client ID` of `Jobs Portal SPA` is displayed. The `Okta Domain` can be obtained by clicking the button-menu present on the up-right corner of the screen.
 
 ### Create groups
 
@@ -152,12 +151,12 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 - Open a terminal and inside `okta-springboot-react` root folder run
   ```
-  docker-compose up -d
+  docker compose up -d
   ```
 
 - Wait for `elasticsearch` Docker container to be up and running. To check it, run
   ```
-  docker-compose ps
+  docker compose ps
   ```
 
 ## Running applications
@@ -319,7 +318,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 
 - To stop and remove containers, network and volumes, run in a terminal the following command inside `okta-springboot-react` root folder
   ```
-  docker-compose down -v
+  docker compose down -v
   ```
 
 ## Cleanup
