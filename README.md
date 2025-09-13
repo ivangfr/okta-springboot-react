@@ -2,6 +2,8 @@
 
 The goal of this project is to implement an application where a user can manage (create/read/update/delete) jobs. For it, we will create a backend Restful API called `jobs-api` and a frontend application called `jobs-ui`. Furthermore, we will use [`Okta`](https://www.okta.com/) to secure the complete application.
 
+**Important**: Since Okta removed the Developer Edition Account, this project will no longer be updated.
+
 ## Proof-of-Concepts & Articles
 
 On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
