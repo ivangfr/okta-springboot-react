@@ -27,7 +27,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) Web Java application that exposes a REST API for managing jobs. The job data are stored in [Elasticsearch](https://www.elastic.co/elasticsearch) It has some endpoints that are secured. `Okta` is used to handle authentication and authorization.
   
-  The table below shows the endpoins, whether they are secured or not, and the authorization role required to access the secured ones.
+  The table below shows the endpoints, whether they are secured or not, and the authorization role required to access the secured ones.
  
   | Endpoint                | Secured | Role                        |
   | ----------------------- | ------- |-----------------------------|
@@ -46,9 +46,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
+- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher.
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [`Docker`](https://www.docker.com/)
+- A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 - [`Okta` account](https://developer.okta.com/signup/)
 
 ## Configuring Okta
@@ -60,102 +60,102 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ### Access Okta Admin Dashboard
 
-The picture below shows how `Okta Admin Dashboard` looks like
+The picture below shows how `Okta Admin Dashboard` looks like:
 
 ![okta-admin-dashboard](documentation/okta-admin-dashboard.jpeg)
 
 ### Add Application
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
-- On the next page, click `Create App Integration` button
-- Select `OIDC - OpenID Connect` as _Sign on method_ and `Single-Page Application` as _Application type_. Click `Next` button
-- Enter the following values in the form.
+- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu.
+- On the next page, click `Create App Integration` button.
+- Select `OIDC - OpenID Connect` as _Sign on method_ and `Single-Page Application` as _Application type_. Click `Next` button.
+- Enter the following values in the form:
   - General Settings
-    - App integration name: `Jobs Portal SPA`
-    - Grant type: check `Authorization Code` and `Implicit (hybrid)`
-    - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/callback/token`
-    - Sign-out redirect URIs: `http://localhost:3000`
+    - App integration name: `Jobs Portal SPA`.
+    - Grant type: check `Authorization Code` and `Implicit (hybrid)`.
+    - Sign-in redirect URIs: `http://localhost:3000/implicit/callback` and `http://localhost:8080/callback/token`.
+    - Sign-out redirect URIs: `http://localhost:3000`.
   - Assignments
-    - Controlled access: `Skip group assignment for now`
-- Click `Save` button
+    - Controlled access: `Skip group assignment for now`.
+- Click `Save` button.
 - On the next screen, the `Client ID` of `Jobs Portal SPA` is displayed. The `Okta Domain` can be obtained by clicking the button-menu present on the up-right corner of the screen.
 
 ### Create groups
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu:
 - Add Staff Group
-  - Click `Add Group` button
-  - Enter `JOBS_STAFF` for the _Name_ text-field
-  - Click `Save` button
+  - Click `Add Group` button.
+  - Enter `JOBS_STAFF` for the _Name_ text-field.
+  - Click `Save` button.
 - Add Customer Group
-  - Click `Add Group` button
-  - Enter `JOBS_CUSTOMER` for the _Name_ text-field
-  - Click `Save` button
+  - Click `Add Group` button.
+  - Enter `JOBS_CUSTOMER` for the _Name_ text-field.
+  - Click `Save` button.
 
 ### Add people
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
-- Click `Add person` button
-- Enter the following information for the Staff person
-  - First name: `Mario`
-  - Last name: `Bros`
-  - Username: `mario.bros@test.com`
-  - Primary email: `mario.bros@test.com`
-  - Groups: `JOBS_STAFF` (the group will popup; select it to add it)
-  - Password: `Set by admin`
-  - Set a strong password in the text-field that will appear
-  - `Uncheck` the check-box that says _"User must change password on first login"_
-  - Click `Save and Add Another` button
-- Enter the following information for the Customer person
-  - First name: `Luigi`
-  - Last name: `Bros`
-  - Username: `luigi.bros@test.com`
-  - Primary email: `luigi.bros@test.com`
-  - Groups: `JOBS_CUSTOMER` (the group will popup; select it to add it)
-  - Password: `Set by admin`
-  - Set a strong password in the text-field that will appear
-  - Leave `Uncheck` the check-box that says _"User must change password on first login"_
-  - Click `Save` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu:
+- Click `Add person` button.
+- Enter the following information for the Staff person:
+  - First name: `Mario`.
+  - Last name: `Bros`.
+  - Username: `mario.bros@test.com`.
+  - Primary email: `mario.bros@test.com`.
+  - Groups: `JOBS_STAFF` (the group will popup; select it to add it).
+  - Password: `Set by admin`.
+  - Set a strong password in the text-field that will appear.
+  - `Uncheck` the check-box that says _"User must change password on first login"_.
+  - Click `Save and Add Another` button.
+- Enter the following information for the Customer person:
+  - First name: `Luigi`.
+  - Last name: `Bros`.
+  - Username: `luigi.bros@test.com`.
+  - Primary email: `luigi.bros@test.com`.
+  - Groups: `JOBS_CUSTOMER` (the group will popup; select it to add it).
+  - Password: `Set by admin`.
+  - Set a strong password in the text-field that will appear.
+  - Leave `Unchecked` the check-box that says _"User must change password on first login"_.
+  - Click `Save` button.
 
 ### Assign Groups to Application
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
-- Select `JOBS_STAFF`
-- Click `Applications` tab
-- Click `Assign Applications` button
-- Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
-- In the `Okta Admin Dashboard` main menu on the left, click `Groups` sub-menu again
-- Select `JOBS_CUSTOMER`
-- Click `Applications` tab
-- Click `Assign Applications` button
-- Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu.
+- Select `JOBS_STAFF`.
+- Click `Applications` tab.
+- Click `Assign Applications` button.
+- Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`.
+- In the `Okta Admin Dashboard` main menu on the left, click `Groups` sub-menu again.
+- Select `JOBS_CUSTOMER`.
+- Click `Applications` tab.
+- Click `Assign Applications` button.
+- Click the `Assign` button related to `Jobs Portal SPA` and then click `Done`.
 
 ### Add Claim
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu
-- In `Authorization Servers` tab, select the `default`
-- In `Claims` tab, click `Add Claim`
-- Enter the following information for the claim
-  - Name: `groups`
+- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu.
+- In `Authorization Servers` tab, select the `default`.
+- In `Claims` tab, click `Add Claim`.
+- Enter the following information for the claim:
+  - Name: `groups`.
   - Include in token type:
-    - Select `Access Token`
-    - Keep `Always` in the right field
-  - Value type: `Groups`
+    - Select `Access Token`.
+    - Keep `Always` in the right field.
+  - Value type: `Groups`.
   - Filter:
-    - Select `Matches regrex`
-    - Set `.*` in the right field
-  - Include in: `Any scope`
-  - Click `Create` button
+    - Select `Matches regex`.
+    - Set `.*` in the right field.
+  - Include in: `Any scope`.
+  - Click `Create` button.
 
 ## Start Environment
 
-- Open a terminal and inside `okta-springboot-react` root folder run
-  ```
+- Open a terminal and inside `okta-springboot-react` root folder run:
+  ```bash
   docker compose up -d
   ```
 
-- Wait for `elasticsearch` Docker container to be up and running. To check it, run
-  ```
+- Wait for `elasticsearch` Docker container to be up and running. To check it, run:
+  ```bash
   docker compose ps
   ```
 
@@ -163,36 +163,36 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 - **jobs-api**
 
-  - In a terminal, navigate to `okta-springboot-react/jobs-api` folder
+  - In a terminal, navigate to `okta-springboot-react/jobs-api` folder.
 
-  - Export the following environment variables. Those values were obtained while [adding Application](#add-application)
-    ```
+  - Export the following environment variables. Those values were obtained while [adding Application](#add-application):
+    ```bash
     export OKTA_DOMAIN=...
     export OKTA_CLIENT_ID=...
     ```
 
-  - Run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`
-    ```
+  - Run the [`Maven`](https://maven.apache.org/) command below to start `jobs-api`:
+    ```bash
     ./mvnw clean spring-boot:run
     ```
 
 - **jobs-ui**
 
-  - Open a new terminal and navigate to `okta-springboot-react/jobs-ui` folder
+  - Open a new terminal and navigate to `okta-springboot-react/jobs-ui` folder.
 
-  - Create a file called `.env.local` with the following content. Those values were obtained while [adding Application](#add-application)
-    ```
+  - Create a file called `.env.local` with the following content. Those values were obtained while [adding Application](#add-application):
+    ```bash
     REACT_APP_OKTA_ORG_URL=https://<OKTA_DOMAIN>
     REACT_APP_OKTA_CLIENT_ID=<OKTA_CLIENT_ID>
     ```
 
-  - If you are running `jobs-ui` for the first time, execute the [`npm`](https://www.npmjs.com/) command below
-    ```
+  - If you are running `jobs-ui` for the first time, execute the [`npm`](https://www.npmjs.com/) command below:
+    ```bash
     npm install
     ```
 
-  - To start `jobs-api` run
-    ```
+  - To start `jobs-ui` run:
+    ```bash
     npm start
     ```
     It will open `job-ui` in a browser automatically.
@@ -206,9 +206,9 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 ## Using jobs-ui
 
-- Open a browser and access http://localhost:3000
+- Open a browser and access http://localhost:3000.
 
-- Click `Login` in the navigation bar
+- Click `Login` in the navigation bar.
 
 - The Okta login page will appear. Enter the username & password of the person added at the step [`Configuring Okta > Add people`](#add-people) and click `Sign In`.
 
@@ -220,14 +220,14 @@ The picture below shows how `Okta Admin Dashboard` looks like
 
 In order to use just the `jobs-api` endpoints, you must have an `JWT` access token. Below are the steps to get it.
 
-- In a terminal, create the following environment variables. Those values were obtained while [adding Application](#add-application)
-  ```
+- In a terminal, create the following environment variables. Those values were obtained while [adding Application](#add-application):
+  ```bash
   OKTA_DOMAIN=...
   OKTA_CLIENT_ID=...
   ```
 
-- Get Okta Access Token Url
-  ```
+- Get Okta Access Token Url:
+  ```bash
   OKTA_ACCESS_TOKEN_URL="https://${OKTA_DOMAIN}/oauth2/default/v1/authorize?\
   client_id=${OKTA_CLIENT_ID}\
   &redirect_uri=http://localhost:8080/callback/token\
@@ -240,12 +240,12 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
   echo $OKTA_ACCESS_TOKEN_URL
   ```
 
-- Copy the Okta Access Token Url from the previous step and paste it in a browser
+- Copy the Okta Access Token Url from the previous step and paste it in a browser.
 
-- The Okta login page will appear. Enter the username & password of the person added at the step [`Configuring Okta > Add people`](#add-people) and click `Sign In` button
+- The Okta login page will appear. Enter the username & password of the person added at the step [`Configuring Okta > Add people`](#add-people) and click `Sign In` button.
 
-- It will redirect to `/callback/token` endpoint of `jobs-api` and the `Access token` will be displayed, together with other information
-  ```
+- It will redirect to `/callback/token` endpoint of `jobs-api` and the `Access token` will be displayed, together with other information:
+  ```json
   {
     "state": "state",
     "access_token": "eyJraWQiOiJyNFdY...",
@@ -254,46 +254,46 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
     "scope": "openid"
   }
   ```
-  > **Note**: In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
+  > **Note**: In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token.
 
 ## Calling jobs-api endpoints using curl
 
 - **`GET /api/jobs/newest`**
 
-  The `api/jobs/newest` endpoint is public, so we can access it without any problem.
-  ```
+  The `api/jobs/newest` endpoint is public, so we can access it without any problem:
+  ```bash
   curl -i http://localhost:8080/api/jobs/newest?number=2
   ```
-  It should return
-  ```
+  It should return:
+  ```json
   HTTP/1.1 200
   [{"id":"uuulE2sBTYouQKNL1uoV", ...},{"id":"u-ulE2sBTYouQKNL1-qb", ...}]
   ```
 
 - **`GET /api/jobs` without Access Token**
 
-  Try to get the list of jobs without informing the access token.
-  ```
+  Try to get the list of jobs without informing the access token:
+  ```bash
   curl -i http://localhost:8080/api/jobs
   ```
-  It should return
-  ```
+  It should return:
+  ```bash
   HTTP/1.1 401
   ```
 
 - **`GET /api/jobs` with Access Token**
 
-  First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section. Then, create an environment variable for the access token.
-  ```
+  First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section. Then, create an environment variable for the access token:
+  ```bash
   ACCESS_TOKEN=...
   ```
   
-  Call the get the list of jobs informing the access token
-  ```
+  Call to get the list of jobs, providing the access token:
+  ```bash
   curl -i http://localhost:8080/api/jobs -H "Authorization: Bearer $ACCESS_TOKEN"
   ```
   Response
-  ```
+  ```json
   HTTP/1.1 200
   {"content":[{"id":"uISqEWsBpDcNLtN2kZv3","title":"Expert Java Developer - Cloud","company":"Microsoft","logoUrl"...}
   ```
@@ -304,7 +304,7 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 
 - First, get the access token as explained in [`Getting Access Token`](#getting-access-token) section.
 
-- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui.html
+- Open `jobs-api` Swagger website http://localhost:8080/swagger-ui.html.
 
 - Click `Authorize` button. Paste the access token in the `Value` field. Then, click `Authorize` and `Close` to finalize.
 
@@ -314,10 +314,10 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 
 ## Shutdown
 
-- Go to the terminals where `jobs-api` and `jobs-ui` are running and press `Ctrl+C`
+- Go to the terminals where `jobs-api` and `jobs-ui` are running and press `Ctrl+C`.
 
-- To stop and remove containers, network and volumes, run in a terminal the following command inside `okta-springboot-react` root folder
-  ```
+- To stop and remove containers, network and volumes, run in a terminal the following command inside `okta-springboot-react` root folder:
+  ```bash
   docker compose down -v
   ```
 
@@ -327,49 +327,49 @@ In order to use just the `jobs-api` endpoints, you must have an `JWT` access tok
 
 #### Delete Person
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu
-- Click `Mario Bros` in the People list
-- In `Mario Bros` profile, click `More Actions` multi-button and then `Deactivate`
-- Confirm deactivation by clicking `Deactivate` button
-- Still in `Mario Bros` profile, click `Delete` button
-- Confirm deletion by clicking `Delete` button
-- Click `Luigi Bros` in the People list
-- In `Luigi Bros` profile, click `More Actions` multi-button and then `Deactivate`
-- Confirm deactivation by clicking `Deactivate` button
-- Still in `Luigi Bros` profile, click `Delete` button
-- Confirm deletion by clicking `Delete` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `People` sub-menu.
+- Click `Mario Bros` in the People list.
+- In `Mario Bros` profile, click `More Actions` multi-button and then `Deactivate`.
+- Confirm deactivation by clicking `Deactivate` button.
+- Still in `Mario Bros` profile, click `Delete` button.
+- Confirm deletion by clicking `Delete` button.
+- Click `Luigi Bros` in the People list.
+- In `Luigi Bros` profile, click `More Actions` multi-button and then `Deactivate`.
+- Confirm deactivation by clicking `Deactivate` button.
+- Still in `Luigi Bros` profile, click `Delete` button.
+- Confirm deletion by clicking `Delete` button.
 
 #### Delete Groups
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu
-- Select `JOBS_CUSTOMER`
-- In `JOBS_CUSTOMER` profile, click `Actions` button and then `Delete` sub-button
-- Confirm deletion by clicking `Delete Group` button
-- Select `JOBS_STAFF`
-- In `JOBS_STAFF` profile, click `Actions` button and then `Delete` sub-button
-- Confirm deletion by clicking `Delete Group` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Directory` menu and then `Groups` sub-menu.
+- Select `JOBS_CUSTOMER`.
+- In `JOBS_CUSTOMER` profile, click `Actions` button and then `Delete` sub-button.
+- Confirm deletion by clicking `Delete Group` button.
+- Select `JOBS_STAFF`.
+- In `JOBS_STAFF` profile, click `Actions` button and then `Delete` sub-button.
+- Confirm deletion by clicking `Delete Group` button.
 
 #### Delete Application
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu
-- In Application list whose status is `ACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Deactivate`
-- Confirm deactivation by clicking `Deactivate Application` button
-- In Application list whose status is `INACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Delete`
-- Confirm deletion by clicking `Delete Application` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Applications` menu and then `Applications` sub-menu.
+- In Application list whose status is `ACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Deactivate`.
+- Confirm deactivation by clicking `Deactivate Application` button.
+- In Application list whose status is `INACTIVE`, click `Jobs Portal SPA`'s `gear` icon and then click `Delete`.
+- Confirm deletion by clicking `Delete Application` button.
 
 #### Delete Claim
 
-- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu
-- In `Authorization Servers` tab, select the `default`
-- In `Claims` tab, click the `x` icon related to the `groups` claim created
-- Confirm deletion by clicking `OK` button
+- In the `Okta Admin Dashboard` main menu on the left, click `Security` menu and then `API` sub-menu.
+- In `Authorization Servers` tab, select the `default`.
+- In `Claims` tab, click the `x` icon related to the `groups` claim created.
+- Confirm deletion by clicking `OK` button.
 
 ## How to upgrade jobs-ui dependencies to latest version
 
-- In a terminal, make sure you are in `okta-springboot-react/jobs-ui` folder
+- In a terminal, make sure you are in `okta-springboot-react/jobs-ui` folder.
 
-- Run the following commands
-  ```
+- Run the following commands:
+  ```bash
   npm upgrade
   npm i -g npm-check-updates
   ncu -u
