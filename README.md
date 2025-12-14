@@ -2,7 +2,7 @@
 
 The goal of this project is to implement an application where a user can manage (create/read/update/delete) jobs. For it, we will create a backend Restful API called `jobs-api` and a frontend application called `jobs-ui`. Furthermore, we will use [`Okta`](https://www.okta.com/) to secure the complete application.
 
-**Important**: Since Okta removed the Developer Edition Account, this project will no longer be updated.
+> **Important**: Since Okta removed the Developer Edition Account, this project will no longer be updated.
 
 ## Proof-of-Concepts & Articles
 
